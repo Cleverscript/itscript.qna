@@ -1,0 +1,9 @@
+<?php
+$MESS['QUESTION_TABLE_TITLE_ACTIVE'] = 'Активно';
+$MESS['QUESTION_TABLE_TITLE_QUESTION'] = 'Вопрос';
+$MESS['QUESTION_TABLE_TITLE_PUBLISH_DATE'] = 'Дата добавления';
+$MESS['UESTION_TABLE_TITLE_USER_ID'] = 'ID пользователя';
+$MESS['QUESTION_TABLE_TITLE_ENTITY_ID'] = 'ID сущности';
+$MESS['QUESTION_TABLE_TITLE_URL'] = 'URL страниы';
+$MESS[''] = '';
+
