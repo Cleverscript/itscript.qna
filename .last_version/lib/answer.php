@@ -2,36 +2,53 @@
 namespace Itscript\Answer;
 
 use Bitrix\Main\Entity;
-use Bitrix\Main\Type;
+use Bitrix\Main\Type\Date;
 use Bitrix\Main\Localization\Loc;
+use Bitrix\Main\ORM\Query\Join;
 use Bitrix\Main\Entity\Validator\Length;
-use Bitrix\Main\Entity\Validator\Unique;
+use Bitrix\Main\ORM\Data\DataManager;
+use Bitrix\Main\ORM\Fields\StringField;
+use Bitrix\Main\ORM\Fields\IntegerField;
+use Bitrix\Main\ORM\Fields\BooleanField;
+use Bitrix\Main\ORM\Fields\DateField;
+use Bitrix\Main\ORM\Fields\Relations\Reference;
+use Bitrix\Main\ORM\Data\DataManager\UserTable;
 
-class AnswerTable extends Entity\DataManager
+class AnswerTable extends DataManager
 {
 	public static function getMap()
 	{
 		return [
-			new Entity\IntegerField('ID', [
+			new IntegerField('ID', [
 				'title' => 'ID',
 				'primary' => true,
 				'autocomplete' => true
             ]),
-			new Entity\IntegerField('USER_ID', [
+
+			new IntegerField('USER_ID', [
 				'title' => Loc::getMessage('ANSWER_TABLE_TITLE_USER_ID'),
 				'required' => true,
 				'format' => '/^[0-9]{1,}$/',
             ]),
-            new Entity\BooleanField('ACTIVE', [
+
+			(new Reference(
+				'USER',
+				DataManager\UserTable::class,
+				Join::on('this.USER_ID', 'ref.ID')
+			))->configureJoinType('inner'),
+
+            new BooleanField('ACTIVE', [
 				'title' => 'ACTIVE',
                 'values' => array('N', 'Y')
             ]),
-			new Entity\IntegerField('QUESTION_ID', [
+
+			new IntegerField('QUESTION_ID', [
 				'title' => Loc::getMessage('ANSWER_TABLE_TITLE_QUESTION_ID'),
 				'required' => true,
 				'format' => '/^[0-9]{1,}$/',
             ]),
-			new Entity\StringField('ANSWER', [
+
+			new StringField('ANSWER', [
 				'title' => Loc::getMessage('ANSWER_TABLE_TITLE_ANSWER'),
                 'required' => true,
 				'size' => 700,
@@ -41,9 +58,10 @@ class AnswerTable extends Entity\DataManager
 					];
 				},
             ]),
-			new Entity\DateField('PUBLISH_DATE', [
+
+			new DateField('PUBLISH_DATE', [
 				'title' => Loc::getMessage('ANSWER_TABLE_TITLE_PUBLISH_DATE'),
-				'default_value' => new Type\Date
+				'default_value' => new Date
 			])
         ];
 	}

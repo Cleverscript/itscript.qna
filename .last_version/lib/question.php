@@ -1,37 +1,53 @@
 <?php
 namespace Itscript\Question;
 
-use Bitrix\Main\Entity;
-use Bitrix\Main\Type;
+use Bitrix\Main\Type\Date;
 use Bitrix\Main\Localization\Loc;
+use Bitrix\Main\ORM\Fields\StringField;
+use Bitrix\Main\ORM\Fields\IntegerField;
+use Bitrix\Main\ORM\Fields\BooleanField;
+use Bitrix\Main\ORM\Fields\DateField;
 use Bitrix\Main\Entity\Validator\Length;
-use Bitrix\Main\Entity\Validator\Unique;
+use Bitrix\Main\ORM\Fields\Relations\Reference;
+use Bitrix\Main\ORM\Query\Join;
+use Bitrix\Main\ORM\Data\DataManager;
+use Bitrix\Main\ORM\Data\DataManager\UserTable;
 
-class QuestionTable extends Entity\DataManager
+class QuestionTable extends DataManager
 {
 	public static function getMap()
 	{
 		return [
-			new Entity\IntegerField('ID', [
+			new IntegerField('ID', [
 				'title' => 'ID',
 				'primary' => true,
 				'autocomplete' => true
             ]),
-			new Entity\IntegerField('USER_ID', [
+
+			new IntegerField('USER_ID', [
 				'title' => Loc::getMessage('QUESTION_TABLE_TITLE_USER_ID'),
 				'required' => true,
 				'format' => '/^[0-9]{1,}$/',
             ]),
-			new Entity\IntegerField('ENTITY_ID', [
+
+			(new Reference(
+					'USER',
+					UserTable::class,
+					Join::on('this.USER_ID', 'ref.ID')
+			))->configureJoinType('inner'),
+
+			new IntegerField('ENTITY_ID', [
 				'title' => Loc::getMessage('QUESTION_TABLE_TITLE_ENTITY_ID'),
 				'required' => true,
 				'format' => '/^[0-9]{1,}$/',
             ]),
-            new Entity\BooleanField('ACTIVE', [
+
+            new BooleanField('ACTIVE', [
 				'title' => Loc::getMessage('QUESTION_TABLE_TITLE_ACTIVE'),
                 'values' => array('N', 'Y')
             ]),
-			new Entity\StringField('URL', [
+
+			new StringField('URL', [
 				'title' => Loc::getMessage('QUESTION_TABLE_TITLE_URL'),
                 'required' => true,
 				'size' => 1000,
@@ -41,19 +57,21 @@ class QuestionTable extends Entity\DataManager
 					];
 				},
             ]),
-			new Entity\StringField('QUESTION', [
+
+			new StringField('QUESTION', [
 				'title' => Loc::getMessage('QUESTION_TABLE_TITLE_QUESTION'),
                 'required' => true,
-				'size' => 700,
+				'size' => 8000,
 				'validation' => function () {
 					return [
 						new Length(null, 8000),
 					];
 				},
             ]),
-			new Entity\DateField('PUBLISH_DATE', [
+
+			new DateField('PUBLISH_DATE', [
 				'title' => Loc::getMessage('QUESTION_TABLE_TITLE_PUBLISH_DATE'),
-				'default_value' => new Type\Date
+				'default_value' => new Date
 			])
         ];
 	}
