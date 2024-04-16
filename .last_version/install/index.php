@@ -6,6 +6,7 @@ use Bitrix\Main\Loader;
 use Bitrix\Main\Config\Option;
 use Bitrix\Main\Context;
 use Bitrix\Main\IO\File;
+use Bitrix\Main\IO\Directory;
 
 Loc::loadMessages(__FILE__);
 
@@ -77,18 +78,43 @@ class itscript_question extends CModule
 
     }
 
+    public function getVendor(): string  {
+        $expl = explode('.', $this->MODULE_ID);
+        return $expl[0];
+    }
+
     function InstallFiles() {
 
-        CopyDirFiles($_SERVER["DOCUMENT_ROOT"]."/bitrix/modules/".$this->MODULE_ID."/install/admin", $_SERVER["DOCUMENT_ROOT"]."/bitrix/admin", true);
-        CopyDirFiles($_SERVER["DOCUMENT_ROOT"]."/bitrix/modules/".$this->MODULE_ID."/install/bitrix", $_SERVER["DOCUMENT_ROOT"]."/bitrix", true);
-        
+        if (!CopyDirFiles(
+            $_SERVER["DOCUMENT_ROOT"]."/bitrix/modules/{$this->MODULE_ID}/install/admin", 
+            $_SERVER["DOCUMENT_ROOT"]."/bitrix/admin", true)) {
+
+            return false;
+        }
+        if (!CopyDirFiles(
+            $_SERVER["DOCUMENT_ROOT"]."/bitrix/modules/{$this->MODULE_ID}/install/bitrix", 
+            $_SERVER["DOCUMENT_ROOT"]."/bitrix", true)) {
+
+            return false;
+        }
+
+        if (!CopyDirFiles(
+            $_SERVER["DOCUMENT_ROOT"]."/bitrix/modules/{$this->MODULE_ID}/install/components", 
+            $_SERVER["DOCUMENT_ROOT"]."/bitrix/components/", true, true)) {
+            return false;
+        }
+
         return true;
     }
 
     function UnInstallFiles() {
-        //\Bitrix\Main\IO\File::deleteFile($_SERVER["DOCUMENT_ROOT"]."/bitrix/admin/.php");
 
-        return true;
+        /*File::deleteFile(
+            $_SERVER["DOCUMENT_ROOT"]."/bitrix/modules/"
+        );*/
+
+        Directory::deleteDirectory($_SERVER["DOCUMENT_ROOT"]."/bitrix/components/{$this->getVendor()}");
+
     }
 
     /**
@@ -171,8 +197,14 @@ class itscript_question extends CModule
     function DoInstall() {
 
         ModuleManager::registerModule($this->MODULE_ID);
-        $this->InstallFiles();
-        $this->InstallDB();
+
+        if (!$this->InstallFiles()) {
+            return false;
+        }
+        if (!$this->InstallDB()) {
+            return false;
+        }
+
         //$this->InstallEvents();
         //$this->InstallAgents();
 
@@ -183,8 +215,8 @@ class itscript_question extends CModule
 
         ModuleManager::unRegisterModule($this->MODULE_ID);
         //$this->UnInstallEvents();
-        $this->UnInstallFiles();
-        $this->UninstallDB();
+        //$this->UnInstallFiles();
+        //$this->UninstallDB();
         //$this->UnInstallAgents();
 
         return true;

@@ -1,12 +1,28 @@
 <?if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true) die();
+
+use Bitrix\Main\Loader;
+use Bitrix\Main\Page\Asset;
+use Bitrix\Main\UI\PageNavigation;
+use Itscript\Question\QuestionTable;
+use Itscript\Question\Util;
+
+Loader::includeModule('itscript.question');
+
 class Question extends CBitrixComponent
 {
 	public function onPrepareComponentParams($arParams) {
+
+        /*echo '<pre>';
+        print_r($arParams);
+        echo '</pre>';*/
+
 		$result = [
 			"CACHE_TYPE" => $arParams["CACHE_TYPE"],
 			"CACHE_TIME" => isset($arParams["CACHE_TIME"])? $arParams["CACHE_TIME"]: 36000000,
-			"X" => intval($arParams["X"]),
         ];
+
+        $result = $result+$arParams;
+
 		return $result;
 	}
 
@@ -14,49 +30,60 @@ class Question extends CBitrixComponent
 
         global $APPLICATION, $USER;
 
-        if ($this->arParams["DISPLAY_PAGER"]) {
-            $arNavParams = array(
-                "nPageSize" => $this->arParams["NEWS_COUNT"],
-                "bDescPageNumbering" => $this->arParams["PAGER_DESC_NUMBERING"],
-                "bShowAll" => $this->arParams["PAGER_SHOW_ALL"],
-            );
-            $arNavigation = CDBResult::GetNavParams($arNavParams);
-            if ((int)$arNavigation["PAGEN"] === 0 && $this->arParams["PAGER_DESC_NUMBERING_CACHE_TIME"] > 0) {
-                $arParams["CACHE_TIME"] = $this->arParams["PAGER_DESC_NUMBERING_CACHE_TIME"];
-            }
-        } else {
-            $arNavParams = array(
-                "nTopCount" => $this->arParams["NEWS_COUNT"],
-                "bDescPageNumbering" => $this->arParams["PAGER_DESC_NUMBERING"],
-            );
-            $arNavigation = false;
-        }
-        
-        $pagerParameters = [];
-        if (!empty($arParams["PAGER_PARAMS_NAME"]) && preg_match("/^[A-Za-z_][A-Za-z01-9_]*$/", $this->arParams["PAGER_PARAMS_NAME"])) {
-            $pagerParameters = $GLOBALS[$this->arParams["PAGER_PARAMS_NAME"]] ?? [];
-            if (!is_array($pagerParameters)) {
-                $pagerParameters = array();
-            }
-        }
-
-		if ($this->startResultCache(false, array(($this->arParams["CACHE_GROUPS"]==="N"? false: $USER->GetGroups()), $arNavigation, $pagerParameters))) {
+		if ($this->startResultCache(false, array(($this->arParams["CACHE_GROUPS"]==="N"? false: $USER->GetGroups())))) {
 	        
-            // TODO rewrite to D7
-            $APPLICATION->SetAdditionalCSS($this->GetPath() . '/templates/' . $this->arParams['COMPONENT_TEMPLATE'] . '/style.css');
-            $APPLICATION->AddHeadScript($this->GetPath().'/templates/'. $this->arParams['COMPONENT_TEMPLATE'] . '/script.js');
-		    
+            // add assets
+            Asset::getInstance()->addCss($this->GetPath() . '/templates/' . $this->getTemplateName() . '/style.css');
+            Asset::getInstance()->addJs($this->GetPath().'/templates/'. $this->getTemplateName() . '/js/script.js');
 
-            $this->arResult["ITEMS"] = [];
-            $this->arResult["VAR"] = 1000;
+            // Create navigation
+            $nav = new PageNavigation("nav");
+            $nav->allowAllRecords(false)
+                ->setPageSize($this->arParams['LIMIT'])
+                ->initFromUri();
 
-            $this->SetResultCacheKeys(array());
+            // Get ORM entity
+            $questions = QuestionTable::getList([
+                'select' => [
+                    '*', 
+                    'U_NAME' => 'USER.NAME', 
+                    'U_SECOND_NAME' => 'USER.SECOND_NAME', 
+                    'U_LAST_NAME' => 'USER.LAST_NAME', 
+                    'U_LOGIN' => 'USER.LOGIN'],
+                'order' => array('ID' => 'DESC'),
+                'offset' => $nav->getOffset(),
+                'limit' => $nav->getLimit(),
+                'count_total' => true
+            ]);
+
+            // Set full count elements entity
+            $nav->setRecordCount($questions->getCount());
+
+            // Fetch all items per page
+            $rows  = $questions->fetchAll();
+
+            // Create FULL_NAME
+            foreach ($rows as $k => $val) {
+                $glueName = trim(implode(' ', [
+                    $val['U_LAST_NAME'], 
+                    $val['U_NAME'], 
+                    $val['U_SECOND_NAME']
+                ]));
+                $rows[$k]['FULL_NAME'] = $glueName ?? $val['U_LOGIN'];
+            }
+
+            $this->arResult["ITEMS"] = $rows;
+            $this->arResult['NAV'] = $nav;
+
+            // Save data cache
+            $this->SetResultCacheKeys(['ITEMS', 'NAV']);
+
+            // Include template
             $this->includeComponentTemplate();
 
 	    } else {
             $this->abortResultCache();
         }
-
 	}
 
 }

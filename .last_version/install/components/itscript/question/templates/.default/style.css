@@ -1,0 +1,24 @@
+.question-form-over{
+    position: relative;
+    height: 38px;
+    width: 100%;
+    padding: 15px 0;
+}
+.question-add-btn{position: absolute; right: 0; top: 10px;} 
+.question-form{
+    padding: 10px;
+    background-color: #f8f9fa !important;
+    display: none;
+}
+.question-form .over-field{margin-bottom:15px;}
+.question-form textarea{
+    display: block;
+    width: 100%;
+    height: 127px;
+    padding: 10px;
+    resize: none;
+}
+.question-list li{
+    list-style: none;
+    margin-bottom: 15px;
+}

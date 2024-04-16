@@ -3,6 +3,7 @@ namespace Itscript\Answer;
 
 use Bitrix\Main\Entity;
 use Bitrix\Main\Type\Date;
+use Bitrix\Main\UserTable;
 use Bitrix\Main\Localization\Loc;
 use Bitrix\Main\ORM\Query\Join;
 use Bitrix\Main\Entity\Validator\Length;
@@ -12,7 +13,6 @@ use Bitrix\Main\ORM\Fields\IntegerField;
 use Bitrix\Main\ORM\Fields\BooleanField;
 use Bitrix\Main\ORM\Fields\DateField;
 use Bitrix\Main\ORM\Fields\Relations\Reference;
-use Bitrix\Main\ORM\Data\DataManager\UserTable;
 
 class AnswerTable extends DataManager
 {
