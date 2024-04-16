@@ -1,6 +1,6 @@
 .question-form-over{
     position: relative;
-    height: 38px;
+    min-height: 38px;
     width: 100%;
     padding: 15px 0;
 }
@@ -21,4 +21,10 @@
 .question-list li{
     list-style: none;
     margin-bottom: 15px;
+    font-size: 14px;
+    line-height: 18px;
+}
+.question-list li strong {
+    color: #3173b6;
+    font-weight: normal;
 }
