@@ -1,8 +1,9 @@
 <?php
 namespace Itscript\Question;
 
-use Bitrix\Main\Type\Date;
 use Bitrix\Main\UserTable;
+use Bitrix\Main\Type\Date;
+use Bitrix\Main\Type\DateTime;
 use Bitrix\Main\Localization\Loc;
 use Bitrix\Main\ORM\Fields\StringField;
 use Bitrix\Main\ORM\Fields\IntegerField;
@@ -10,9 +11,8 @@ use Bitrix\Main\ORM\Fields\BooleanField;
 use Bitrix\Main\ORM\Fields\DateField;
 use Bitrix\Main\Entity\Validator\Length;
 use Bitrix\Main\ORM\Fields\Relations\Reference;
-use Bitrix\Main\ORM\Query\Join;
 use Bitrix\Main\ORM\Data\DataManager;
-
+use Bitrix\Main\ORM\Query\Join;
 
 class QuestionTable extends DataManager
 {
@@ -72,7 +72,7 @@ class QuestionTable extends DataManager
 
 			new DateField('PUBLISH_DATE', [
 				'title' => Loc::getMessage('QUESTION_TABLE_TITLE_PUBLISH_DATE'),
-				'default_value' => new Date
+				'default_value' => new DateTime
 			])
         ];
 	}

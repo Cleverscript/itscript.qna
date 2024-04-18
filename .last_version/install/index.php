@@ -2,6 +2,7 @@
 use Bitrix\Main;
 use Bitrix\Main\Localization\Loc;
 use Bitrix\Main\ModuleManager;
+use Bitrix\Main\EventManager;
 use Bitrix\Main\Loader;
 use Bitrix\Main\Config\Option;
 use Bitrix\Main\Context;
@@ -30,6 +31,8 @@ class itscript_question extends CModule
     public $SHOW_SUPER_ADMIN_GROUP_RIGHTS;
     public $MODULE_GROUP_RIGHTS;
 
+    public $eventManager;
+
     function __construct() {
 
         $arModuleVersion = array();
@@ -51,6 +54,8 @@ class itscript_question extends CModule
         $this->MODULE_SORT = 1;
         $this->SHOW_SUPER_ADMIN_GROUP_RIGHTS = 'Y';
         $this->MODULE_GROUP_RIGHTS = "Y";
+
+        $this->eventManager = EventManager::getInstance();
 
     }
 
@@ -87,13 +92,13 @@ class itscript_question extends CModule
 
         if (!CopyDirFiles(
             $_SERVER["DOCUMENT_ROOT"]."/bitrix/modules/{$this->MODULE_ID}/install/admin", 
-            $_SERVER["DOCUMENT_ROOT"]."/bitrix/admin", true)) {
+            $_SERVER["DOCUMENT_ROOT"]."/bitrix/admin/", true)) {
 
             return false;
         }
         if (!CopyDirFiles(
             $_SERVER["DOCUMENT_ROOT"]."/bitrix/modules/{$this->MODULE_ID}/install/bitrix", 
-            $_SERVER["DOCUMENT_ROOT"]."/bitrix", true)) {
+            $_SERVER["DOCUMENT_ROOT"]."/bitrix/", true)) {
 
             return false;
         }
@@ -110,7 +115,7 @@ class itscript_question extends CModule
     function UnInstallFiles() {
 
         /*File::deleteFile(
-            $_SERVER["DOCUMENT_ROOT"]."/bitrix/modules/"
+            $_SERVER["DOCUMENT_ROOT"]."/bitrix/admin/"
         );*/
 
         Directory::deleteDirectory($_SERVER["DOCUMENT_ROOT"]."/bitrix/components/{$this->getVendor()}");
@@ -122,9 +127,8 @@ class itscript_question extends CModule
      */
     function InstallEvents() {
 
-        //$eventManager = \Bitrix\Main\EventManager::getInstance();
-        //$eventManager->registerEventHandler("sale", "OnSaleOrderSaved", $this->MODULE_ID, "\Itscript\Question\Event", "OnSaleOrderSavedHandler", "100");
-    
+        $eventManager = EventManager::getInstance();
+        $eventManager->registerEventHandler('main', 'OnBuildGlobalMenu', $this->MODULE_ID, '\Itscript\Question\Menu', 'adminOnBuildGlobalMenu', 9999);
     }
 
     /**
@@ -132,8 +136,8 @@ class itscript_question extends CModule
      */
     function UnInstallEvents() {
 
-        //$eventManager = \Bitrix\Main\EventManager::getInstance();
-        //$eventManager->unRegisterEventHandler("sale", "OnSaleOrderSaved", $this->MODULE_ID, "\Itscript\Question\Event", "OnSaleOrderSavedHandler");
+        $eventManager = EventManager::getInstance();
+        $eventManager->unRegisterEventHandler('main', 'OnBuildGlobalMenu', $this->MODULE_ID, '\Itscript\Question\Menu', 'adminOnBuildGlobalMenu');
     
     }
 
@@ -206,7 +210,7 @@ class itscript_question extends CModule
         }
 
         //$this->InstallEvents();
-        //$this->InstallAgents();
+        //$this->InstallAgents();itscript_answers_list.php
 
         return true;
     }

@@ -1,0 +1,2 @@
+<?php
+$MESS["ITSCRIPT_QUESTION_GLOBAL_MENU_TITLE"] = "Вопос - ответ";
