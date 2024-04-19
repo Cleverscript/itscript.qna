@@ -70,6 +70,16 @@ class QuestionTable extends DataManager
 				},
             ]),
 
+			new StringField('ANSWER', [
+				'title' => Loc::getMessage('QUESTION_TABLE_TITLE_ANSWER'),
+				'size' => 8000,
+				'validation' => function () {
+					return [
+						new Length(null, 8000),
+					];
+				},
+            ]),
+
 			new DateField('PUBLISH_DATE', [
 				'title' => Loc::getMessage('QUESTION_TABLE_TITLE_PUBLISH_DATE'),
 				'default_value' => new DateTime

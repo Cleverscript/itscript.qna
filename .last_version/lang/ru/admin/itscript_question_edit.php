@@ -1,1 +1,22 @@
 <?php
+$MESS['ITSCRIPT_QUESTION_TITLE'] = 'Редактировать вопрос';
+$MESS['ITSCRIPT_QUESTION_PAGE_TITLE'] = 'Редактировать';
+$MESS['ITSCRIPT_QUESTION_INCLUDE_MODULE_ERROR'] = 'Ошибка - не установлен модуль #MODULE_ID#!';
+$MESS['ITSCRIPT_QUESTION_ADD'] = 'Добавить';
+$MESS['ITSCRIPT_QUESTION_EDIT'] = 'Редактировать';
+$MESS['ITSCRIPT_QUESTION_FORM_EDIT_COPY'] = 'Копировать';
+$MESS['ITSCRIPT_QUESTION_DELETE'] = 'Удалить';
+$MESS['ITSCRIPT_QUESTION_DELETE_ALERT'] = 'Удалить этот элемент?';
+$MESS['ITSCRIPT_QUESTION_TITLE_ACTIVE'] = 'Активность';
+$MESS['ITSCRIPT_QUESTION_LIST'] = 'Список вопросов';
+$MESS['ITSCRIPT_QUESTION_FIELD_TITLE_QUESTION'] = 'Вопрос';
+$MESS['ITSCRIPT_QUESTION_FIELD_TITLE_ANSWER'] = 'Ответ';
+$MESS['ITSCRIPT_QUESTION_FIELD_TITLE_URL'] = 'URL страницы';
+$MESS['ITSCRIPT_QUESTION_FORM_EDIT_ERROR_SAVE'] = 'Ошибка сохранения';
+$MESS[''] = '';
+$MESS[''] = '';
+$MESS[''] = '';
+$MESS[''] = '';
+$MESS[''] = '';
+$MESS[''] = '';
+$MESS[''] = '';

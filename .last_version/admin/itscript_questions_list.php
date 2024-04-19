@@ -1,4 +1,5 @@
-<?php require_once($_SERVER["DOCUMENT_ROOT"]."/bitrix/modules/main/include/prolog_admin_before.php");
+<?php
+/** @global CMain $APPLICATION */
 
 use Bitrix\Main;
 use Bitrix\Main\Loader;
@@ -10,6 +11,10 @@ use Bitrix\Main\UI\PageNavigation;
 
 $module_id = "itscript.question";
 
+require_once($_SERVER['DOCUMENT_ROOT'] . '/bitrix/modules/main/include/prolog_admin_before.php');
+require_once(dirname(__FILE__)."/../include.php");
+require_once(dirname(__FILE__)."/../prolog.php");
+
 IncludeModuleLangFile(__FILE__);
 
 // Check access
@@ -20,13 +25,7 @@ if(!Loader::includeModule($module_id)){
 	CAdminMessage::ShowMessage(Loc::getMessage("ITSCRIPT_QUESTION_INCLUDE_MODULE_ERROR", ['#MODULE_ID#' => $module_id]));
 }
 
-//CUtil::InitJSCore(array($module_id));
-
-require_once($_SERVER['DOCUMENT_ROOT'] . '/bitrix/modules/main/include/prolog_admin_before.php');
-require_once(dirname(__FILE__)."/../include.php");
-require_once(dirname(__FILE__)."/../prolog.php");
-
-global $APPLICATION;
+CJSCore::Init(array('ajax', 'json', 'ls', 'session', 'jquery', 'popup', 'pull'));
 
 $adminListTableID = 'b_itscript_question';
 
@@ -213,7 +212,7 @@ if ($usePageNavigation) {
 
 $getListParams['select'] = array_keys($getListParams['select']);
 
-echo '<pre>';
+/*echo '<pre>';
 print_r([
     $totalCount,
     $navyParams,
@@ -223,7 +222,7 @@ print_r([
     LANGUAGE_ID
 ]);
 //print_r([$getListParams, $adminListTableID]);
-echo '</pre>';
+echo '</pre>';*/
 
 
 $formIterator = new CAdminUiResult(QuestionTable::getList($getListParams), $adminListTableID);

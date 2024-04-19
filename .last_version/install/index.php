@@ -114,11 +114,14 @@ class itscript_question extends CModule
 
     function UnInstallFiles() {
 
-        /*File::deleteFile(
-            $_SERVER["DOCUMENT_ROOT"]."/bitrix/admin/"
-        );*/
+        File::deleteFile(
+            $_SERVER["DOCUMENT_ROOT"]."/bitrix/admin/itscript_questions_list.php"
+        );
+        File::deleteFile(
+            $_SERVER["DOCUMENT_ROOT"]."/bitrix/admin/itscript_questions_edit.php"
+        );
 
-        Directory::deleteDirectory($_SERVER["DOCUMENT_ROOT"]."/bitrix/components/{$this->getVendor()}");
+        //Directory::deleteDirectory($_SERVER["DOCUMENT_ROOT"]."/bitrix/components/{$this->getVendor()}");
 
     }
 
@@ -219,7 +222,7 @@ class itscript_question extends CModule
 
         ModuleManager::unRegisterModule($this->MODULE_ID);
         //$this->UnInstallEvents();
-        //$this->UnInstallFiles();
+        $this->UnInstallFiles();
         //$this->UninstallDB();
         //$this->UnInstallAgents();
 
