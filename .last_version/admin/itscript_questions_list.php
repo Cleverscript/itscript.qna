@@ -32,6 +32,7 @@ $adminListTableID = 'b_itscript_question';
 $adminSort = new CAdminSorting($adminListTableID, 'ID', 'ASC');
 $adminList = new CAdminUiList($adminListTableID, $adminSort);
 
+// Set filter field panel
 $filterFields = array(
     array(
         "id" => "ID",
@@ -40,10 +41,22 @@ $filterFields = array(
         "default" => true
     ),
     array(
-        "id" => "",
+        "id" => "ENTITY_ID",
         "name" => Loc::getMessage("ITSCRIPT_QUESTION_ENTITY_ID_ADMIN_FILTER"),
         "type" => "int",
         "filterable" => "="
+    ),
+    array(
+        "id" => "QUESTION",
+        "name" => Loc::getMessage("ITSCRIPT_QUESTION_TITLE_QUESTION"),
+        "type" => "text",
+        "filterable" => "%"
+    ),
+    array(
+        "id" => "ANSWER",
+        "name" => Loc::getMessage("ITSCRIPT_QUESTION_TITLE_ANSWER"),
+        "type" => "text",
+        "filterable" => "%"
     ),
 );
 
@@ -130,6 +143,13 @@ $headerList['QUESTION'] = array(
     'content' => Loc::getMessage('ITSCRIPT_QUESTION_TITLE_QUESTION'),
     'title' => Loc::getMessage('ITSCRIPT_QUESTION_TITLE_QUESTION'),
     'sort' => 'QUESTION',
+    'default' => false
+);
+$headerList['ANSWER'] = array(
+    'id' => 'ANSWER',
+    'content' => Loc::getMessage('ITSCRIPT_QUESTION_TITLE_ANSWER'),
+    'title' => Loc::getMessage('ITSCRIPT_QUESTION_TITLE_ANSWER'),
+    'sort' => 'ANSWER',
     'default' => false
 );
 $headerList['ACTIVE'] = array(
@@ -266,20 +286,24 @@ foreach($result as $form)
         $row->AddViewField('ID', '<a href="' . $urlEdit . '">' . $form['ID'] . '</a>');
     }
 
-    if ($selectFieldsMap['URL']) {
-        $row->AddViewField('URL', '<a href="' . $form['URL'] . '">' . $form['URL'] . '</a>');
-    }
-
     if ($selectFieldsMap['QUESTION']) {
         $row->AddViewField('QUESTION', $form['QUESTION']);
+    }
+
+    if ($selectFieldsMap['ANSWER']) {
+        $row->AddViewField('ANSWER', $form['ANSWER']);
+    }
+
+    if ($selectFieldsMap['ACTIVE']) {
+        $row->AddViewField('ACTIVE', $yesNo[$form['ACTIVE']]);
     }
     
     if ($selectFieldsMap['PUBLISH_DATE']) {
         $row->AddViewField('PUBLISH_DATE', $form['PUBLISH_DATE']->format('d.m.Y H:i:s'));
     }
 
-    if ($selectFieldsMap['ACTIVE']) {
-        $row->AddViewField('ACTIVE', $yesNo[$form['ACTIVE']]);
+    if ($selectFieldsMap['URL']) {
+        $row->AddViewField('URL', '<a href="' . $form['URL'] . '">' . $form['URL'] . '</a>');
     }
 
     $actions = array();
@@ -305,7 +329,7 @@ CTimeZone::Enable();
 
 $adminList->AddGroupActionTable([
     'delete' => true,
-    'for_all'=>true,
+    'for_all' => true,
 
 ]);
 

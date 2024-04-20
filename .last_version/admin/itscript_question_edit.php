@@ -29,7 +29,7 @@ if(!Loader::includeModule($module_id)){
 $adminListTableID = 'b_itscript_question';
 
 $selfFolderUrl = $adminPage->getSelfFolderUrl();
-$listUrl = $selfFolderUrl . "itscript_question_list.php?lang=" . LANGUAGE_ID;
+$listUrl = $selfFolderUrl . "itscript_questions_list.php?lang=" . LANGUAGE_ID;
 $listUrl = $adminSidePanelHelper->editUrlToPublicPage($listUrl);
 
 $request = Main\Context::getCurrent()->getRequest();
@@ -72,7 +72,12 @@ if (check_bitrix_sessid()
 ) {
     $adminSidePanelHelper->decodeUriComponent($request);
     $rawData = $request->getPostList();
+
+    //echo '<pre>';
+    //var_dump($rawData);
+    //echo '<pre>';
 	
+    // set value fields
     $fields = [
         'ID' => $rawData->get('ID'),
         'ACTIVE' => $rawData->get('ACTIVE'),
@@ -81,11 +86,13 @@ if (check_bitrix_sessid()
         'ANSWER'=> trim($rawData->get('ANSWER')),
         'URL' => trim($rawData->get('URL')),
     ];
-    foreach($fields['DOCUMENT'] as $key=>$doc){
-        if($doc['NAME']=='') {
-            unset($fields['DOCUMENT'][$key]);
-        }
+
+    // is add new
+    if (!$eventID) {
+        $fields['ENTITY_ID'] = $rawData->get('ENTITY_ID');
+        $fields['USER_ID'] = $USER->GetID();
     }
+
     if ($eventID == 0 || $copy) {
         $result = QuestionTable::add($fields);
     } else {
@@ -149,7 +156,7 @@ if (!$readOnly && $eventID > 0) {
             'TEXT' => Loc::getMessage("ITSCRIPT_QUESTION_EDIT"),
             'LINK' => $copyUrl
         );
-        $deleteUrl = $selfFolderUrl . "itscript_question_list.php?lang=" . LANGUAGE_ID . "&ID=" . $eventID . "&action=delete&" . bitrix_sessid_get();
+        $deleteUrl = $selfFolderUrl . "itscript_questions_list.php?lang=" . LANGUAGE_ID . "&ID=" . $eventID . "&action=delete&" . bitrix_sessid_get();
         $buttonAction = "LINK";
         if ($adminSidePanelHelper->isPublicFrame()) {
             $deleteUrl = $adminSidePanelHelper->editUrlToPublicPage($deleteUrl);
@@ -224,9 +231,26 @@ if ($eventID > 0 && !$copy) {
 $tabControl->AddCheckBoxField("ACTIVE",
     Loc::getMessage("ITSCRIPT_QUESTION_TITLE_ACTIVE").":",
     false, array("Y", "N"),
-    $event['ACTIVE']=="Y"
+    ($event['ACTIVE'] == "Y" || $fields['ACTIVE'] == "Y")
 );
 
+//echo '<pre>';
+//var_dump($_POST);
+//echo '<pre>';
+
+// is add new
+if (!$eventID) {
+    $tabControl->BeginCustomField('ENTITY_ID', Loc::getMessage("ITSCRIPT_QUESTION_TITLE_ENTITY_ID"), true);
+    ?>
+      <tr id="tr_ENTITY_ID">
+          <td class="adm-detail-content-cell-l"><?=$tabControl->GetCustomLabelHTML();?></td>
+          <td class="adm-detail-content-cell-r">
+                <input type="text" name="ENTITY_ID" id="ENTITY_ID" value="<?=$fields['ENTITY_ID'];?>">
+          </td>
+      </tr>
+      <?
+    $tabControl->EndCustomField('ENTITY_ID', '');
+}
 
 foreach ($allFields as $fld => $type) {
     $tabControl->BeginCustomField($fld, Loc::getMessage("ITSCRIPT_QUESTION_FIELD_TITLE_" . $fld), false);
@@ -234,15 +258,23 @@ foreach ($allFields as $fld => $type) {
     <tr id="tr_<?=$fld?>">
         <td class="adm-detail-content-cell-l"><?=$tabControl->GetCustomLabelHTML(); ?></td>
         <td class="adm-detail-content-cell-r">
-            <?if($type=='string'){?>
+            <? if ($type=='string') { ?>
                 <input type="text" size='35' name="<?=$fld?>" id="<?=$fld?>" value="<?=$event[$fld]?>">
-            <?}elseif($type=='int'){?>
+            <? } elseif ($type=='int') { ?>
             <input type="int" min="0" size='35' name="<?=$fld?>" id="<?=$fld?>" value="<?=$event[$fld]?>">
-            <?}elseif($type=='text'){?>
-                <textarea cols="60" rows="5" name="<?=$fld?>" id="<?=$fld?>" <?php if($fld=='QUESTION' && $eventID):?>disabled<?php endif;?>><?=$event[$fld]?></textarea>
-            <?}elseif($type=='date'){?>
+            <? } elseif ($type=='text') { ?>
+
+                <?php if ($fld=='QUESTION' && $eventID):?>
+                    <textarea cols="60" rows="5" name="" disabled><?=$event[$fld]??$fields[$fld]?></textarea>
+                    <input type="hidden" name="<?=$fld?>" id="<?=$fld?>" value="<?=$event[$fld]?>">
+                <?php else: ?>
+                    <textarea cols="60" rows="5" name="<?=$fld?>" id="<?=$fld?>"><?=$event[$fld]??$fields[$fld]?></textarea>
+                <?php endif;?>
+
+            
+            <? } elseif ($type=='date') { ?>
                 <?=CAdminCalendar::CalendarDate($fld, $event[$fld], 19, true);?>
-            <?}?>
+            <? } ?>
         </td>
     </tr>
     <?

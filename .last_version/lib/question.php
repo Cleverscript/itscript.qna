@@ -10,6 +10,7 @@ use Bitrix\Main\ORM\Fields\IntegerField;
 use Bitrix\Main\ORM\Fields\BooleanField;
 use Bitrix\Main\ORM\Fields\DateField;
 use Bitrix\Main\Entity\Validator\Length;
+use Bitrix\Main\Entity\Validator\RegExp;
 use Bitrix\Main\ORM\Fields\Relations\Reference;
 use Bitrix\Main\ORM\Data\DataManager;
 use Bitrix\Main\ORM\Query\Join;
@@ -55,6 +56,7 @@ class QuestionTable extends DataManager
 				'validation' => function () {
 					return [
 						new Length(null, 1000),
+						new RegExp('/[h][t][t][p][s]?[:\/\/]/')
 					];
 				},
             ]),
