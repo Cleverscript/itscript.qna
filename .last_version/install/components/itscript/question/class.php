@@ -50,7 +50,8 @@ class Question extends CBitrixComponent
                     'U_SECOND_NAME' => 'USER.SECOND_NAME', 
                     'U_LAST_NAME' => 'USER.LAST_NAME', 
                     'U_LOGIN' => 'USER.LOGIN'],
-                'order' => array('ID' => 'DESC'),
+                'filter' => ['ACTIVE' => 'Y'],
+                'order' => ['ID' => 'DESC'],
                 'offset' => $nav->getOffset(),
                 'limit' => $nav->getLimit(),
                 'count_total' => true
