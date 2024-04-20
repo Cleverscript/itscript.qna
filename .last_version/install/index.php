@@ -223,7 +223,7 @@ class itscript_question extends CModule
         ModuleManager::unRegisterModule($this->MODULE_ID);
         //$this->UnInstallEvents();
         $this->UnInstallFiles();
-        //$this->UninstallDB();
+        $this->UninstallDB();
         //$this->UnInstallAgents();
 
         return true;

@@ -89,10 +89,8 @@ $(document).ready(function(){
             alertBlock.className += ' success';
             formBlock.className += ' hide';
 
-            alertBlock.innerHTML = '';
-            alertBlock.innerHTML = response.data['ALERT'];
-            
-		
+            alertBlock.innerHTML += response.data['ALERT'];
+
         }, function (response) { // status !== 'success'
             console.log(response);
 
@@ -100,7 +98,16 @@ $(document).ready(function(){
             alertBlock.className += ' error';
 
             for (let i = 0; i < response.errors.length; i++) {
-                alertBlock.innerHTML += response.errors[i].message[0] + '<br/>';
+
+                let msg;
+
+                if ((typeof response.errors[i].message) == 'string') {
+                    msg = response.errors[i].message;
+                } else if((typeof response.errors[i].message) == 'object') {
+                    msg = response.errors[i].message[0];
+                }
+
+                alertBlock.innerHTML += msg + '<br/>';
             }
 
         });

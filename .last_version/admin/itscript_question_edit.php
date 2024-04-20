@@ -81,10 +81,11 @@ if (check_bitrix_sessid()
     $fields = [
         'ID' => $rawData->get('ID'),
         'ACTIVE' => $rawData->get('ACTIVE'),
-        'PUBLISH_DATE' => new DateTime(),
+        'PUBLISH_DATE_ANSWER' => new DateTime(),
         'QUESTION'=> trim($rawData->get('QUESTION')),
         'ANSWER'=> trim($rawData->get('ANSWER')),
         'URL' => trim($rawData->get('URL')),
+        'ADMIN_ID' => $USER->GetID()
     ];
 
     // is add new

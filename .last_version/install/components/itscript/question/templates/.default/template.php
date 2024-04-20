@@ -25,14 +25,33 @@
     <ul class="question-list">
     <?php foreach($arResult['ITEMS'] as $item): ?>
         <li>
-            <p>
-                <strong><?=($item["FULL_NAME"])??$item["U_LOGIN"];?></strong>
-                <?php if($arParams['DISPLAY_DATE']=='Y'): ?>
-                <span class="content-publish-date"><?=$item["PUBLISH_DATE"];?></span>
-                <?php endif; ?>
-            </p>
-            <div class="content-question"><?=$item["QUESTION"];?></div>
-            <div class="content-answer"><?=$item["ANSWER"];?></div>
+            <div class="question-content-wrap">
+                <div class="question-author-photo" style="background: url('<?=$item["U_PHOTO"];?>');"></div>
+                <div class="content-over">
+
+                    <strong><?=($item["FULL_NAME"])??$item["U_LOGIN"];?></strong>
+                    <?php if($arParams['DISPLAY_DATE']=='Y'): ?>
+                    <span class="publish-date"><?=$item["PUBLISH_DATE"];?></span>
+                    <?php endif; ?>
+                    <div class="text"><?=$item["QUESTION"];?></div>
+                
+                </div>
+            </div>
+            <?php if (!empty($item["ANSWER"])): ?>
+            <div class="question-content-wrap answer-content-wrap">
+                <div class="question-author-photo" style="background: url('<?=$item["U_PHOTO"];?>');"></div>
+                <div class="content-over">
+
+                    <strong><?=($item["FULL_NAME"])??$item["U_LOGIN"];?></strong>
+                    <?php if($arParams['DISPLAY_DATE']=='Y'): ?>
+                    <span class="publish-date"><?=$item["PUBLISH_DATE_ANSWER"];?></span>
+                    <?php endif; ?>
+
+                    <div class="text"><?=$item["ANSWER"];?></div>
+                </div>
+            </div>
+            <?php endif; ?>
+            <p class="clr"></p>
         </li>       
     <?php endforeach; ?>
     </ul>

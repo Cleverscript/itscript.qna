@@ -3,6 +3,8 @@
 use Bitrix\Main\Loader;
 use Bitrix\Main\Page\Asset;
 use Bitrix\Main\UI\PageNavigation;
+use Bitrix\Main\FileTable;
+use Bitrix\Main\Type\DateTime;
 use Itscript\Question\QuestionTable;
 use Itscript\Question\Util;
 
@@ -51,10 +53,12 @@ class Question extends CBitrixComponent
             $questions = QuestionTable::getList([
                 'select' => [
                     '*', 
-                    'U_NAME' => 'USER.NAME', 
-                    'U_SECOND_NAME' => 'USER.SECOND_NAME', 
+                    'U_LOGIN' => 'USER.LOGIN',
+                    'U_NAME' => 'USER.NAME',  
                     'U_LAST_NAME' => 'USER.LAST_NAME', 
-                    'U_LOGIN' => 'USER.LOGIN'],
+                    'U_PHOTO' => 'USER.PERSONAL_PHOTO',
+                    'U_SECOND_NAME' => 'USER.SECOND_NAME',
+                ],
                 'filter' => $filter,
                 'order' => ['ID' => 'DESC'],
                 'offset' => $nav->getOffset(),
@@ -68,6 +72,8 @@ class Question extends CBitrixComponent
             // Fetch all items per page
             $rows  = $questions->fetchAll();
 
+            //Util::debug($rows);
+
             // Create FULL_NAME
             foreach ($rows as $k => $val) {
                 $glueName = trim(implode(' ', [
@@ -76,6 +82,18 @@ class Question extends CBitrixComponent
                     $val['U_SECOND_NAME']
                 ]));
                 $rows[$k]['FULL_NAME'] = $glueName ?? $val['U_LOGIN'];
+
+                // User photo
+                if ($val['U_PHOTO']) {
+
+                    //$file = FileTable::getByPrimary($val['U_PHOTO'], ['select' => ['*']])->fetchObject();
+                    //Util::debug($file);
+
+                    $file = \CFile::GetFileArray($val['U_PHOTO']);
+                    //Util::debug($file);
+
+                    $rows[$k]['U_PHOTO'] = $file['SRC'];
+                }
             }
 
             $this->arResult["ITEMS"] = $rows;

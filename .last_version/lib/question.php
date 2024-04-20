@@ -8,7 +8,7 @@ use Bitrix\Main\Localization\Loc;
 use Bitrix\Main\ORM\Fields\StringField;
 use Bitrix\Main\ORM\Fields\IntegerField;
 use Bitrix\Main\ORM\Fields\BooleanField;
-use Bitrix\Main\ORM\Fields\DateField;
+use Bitrix\Main\ORM\Fields\DatetimeField;
 use Bitrix\Main\Entity\Validator\Length;
 use Bitrix\Main\Entity\Validator\RegExp;
 use Bitrix\Main\ORM\Fields\Relations\Reference;
@@ -36,6 +36,19 @@ class QuestionTable extends DataManager
 					'USER',
 					UserTable::class,
 					Join::on('this.USER_ID', 'ref.ID')
+			))->configureJoinType('inner'),
+
+
+			new IntegerField('ADMIN_ID', [
+				'title' => Loc::getMessage('QUESTION_TABLE_TITLE_ADMIN_ID'),
+				/*'required' => true,*/
+				'format' => '/^[0-9]{1,}$/',
+            ]),
+
+			(new Reference(
+					'ADMIN',
+					UserTable::class,
+					Join::on('this.ADMIN_ID', 'ref.ID')
 			))->configureJoinType('inner'),
 
 			new IntegerField('ENTITY_ID', [
@@ -82,10 +95,16 @@ class QuestionTable extends DataManager
 				},
             ]),
 
-			new DateField('PUBLISH_DATE', [
+			new DatetimeField('PUBLISH_DATE', [
 				'title' => Loc::getMessage('QUESTION_TABLE_TITLE_PUBLISH_DATE'),
 				'default_value' => new DateTime
-			])
+			]),
+
+			new DatetimeField('PUBLISH_DATE_ANSWER', [
+				'title' => Loc::getMessage('QUESTION_TABLE_TITLE_PUBLISH_DATE_ANSWER'),
+				'default_value' => new DateTime
+			]),
+
         ];
 	}
 }
