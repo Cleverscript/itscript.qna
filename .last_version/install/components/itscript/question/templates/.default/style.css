@@ -28,3 +28,13 @@
     color: #3173b6;
     font-weight: normal;
 }
+.question-list li .publish-date{
+    color: #a0a7ab;
+}
+.question-list li .content-question, 
+.question-list li .content-answer{
+    margin-bottom: 35px;
+}
+.question-list li .content-answer{
+    margin-left: 60px;
+}

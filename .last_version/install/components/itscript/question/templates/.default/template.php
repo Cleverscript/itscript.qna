@@ -27,10 +27,11 @@
             <p>
                 <strong><?=($item["FULL_NAME"])??$item["U_LOGIN"];?></strong>
                 <?php if($arParams['DISPLAY_DATE']=='Y'): ?>
-                <span>[<?=$item["PUBLISH_DATE"];?>]</span>
+                <span class="content-publish-date"><?=$item["PUBLISH_DATE"];?></span>
                 <?php endif; ?>
             </p>
-            <div><?=$item["QUESTION"];?></div>
+            <div class="content-question"><?=$item["QUESTION"];?></div>
+            <div class="content-answer"><?=$item["ANSWER"];?></div>
         </li>       
     <?php endforeach; ?>
     </ul>
