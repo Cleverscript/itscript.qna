@@ -43,4 +43,9 @@ class Util
 		]);
 	}
 
+    public static function clearQuestionText($s) {
+        $s = strip_tags($s);
+        return preg_replace('#\bhttps?://[^\s()<>]+(?:\([\w\d]+\)|([^[:punct:]\s]|/))#', '', $s);
+    }
+
 }

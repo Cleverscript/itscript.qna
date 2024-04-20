@@ -4,6 +4,7 @@
         <?=GetMessage("T_QUESTION_ADD");?>
     </button>
     <div class="question-form">
+        <div id="question-form-js-alert" class="question-form-alert"></div>
         <form id="question-form-js" action="" method="POST">
             <div class="over-field">
                 <label for="question-field"><?=GetMessage("T_QUESTION_FIELD_LABEL");?></label>

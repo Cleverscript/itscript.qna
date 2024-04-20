@@ -79,30 +79,30 @@ $(document).ready(function(){
             data: {
                 fields: filedsObject
             }
-        }).then(function (response) {
+        }).then(function (response) { // status == 'success'
             console.log(response);
 
-            window.location.reload();
+            //window.location.reload();
 
-            /**
-            {
-                "status": "success", 
-                "data": {
-                    "ID": 1,
-                    "NAME": "test"
-                }, 
-                "errors": []
-            }
-            **/			
-        }, function (response) {
-            //сюда будут приходить все ответы, у которых status !== 'success'
+            let alertBlock = document.getElementById('question-form-js-alert');
+            let formBlock = document.getElementById('question-form-js');
+            alertBlock.className += ' success';
+            formBlock.className += ' hide';
+
+            alertBlock.innerHTML = '';
+            alertBlock.innerHTML = response.data['ALERT'];
+            
+		
+        }, function (response) { // status !== 'success'
             console.log(response);
-            /**
-            {
-                "status": "error", 
-                "errors": [...]
+
+            let alertBlock = document.getElementById('question-form-js-alert');
+            alertBlock.className += ' error';
+
+            for (let i = 0; i < response.errors.length; i++) {
+                alertBlock.innerHTML += response.errors[i].message[0] + '<br/>';
             }
-            **/				
+
         });
     });
 });

@@ -1,4 +1,4 @@
-<?if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true) die();
+<?php if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true) die();
 
 use Bitrix\Main\Loader;
 use Bitrix\Main\Page\Asset;
@@ -42,6 +42,11 @@ class Question extends CBitrixComponent
                 ->setPageSize($this->arParams['LIMIT'])
                 ->initFromUri();
 
+            $filter = [];
+            if ($this->arParams['USE_PREMODERATION'] == 'Y') {
+                $filter['ACTIVE'] = 'Y';
+            }
+
             // Get ORM entity
             $questions = QuestionTable::getList([
                 'select' => [
@@ -50,7 +55,7 @@ class Question extends CBitrixComponent
                     'U_SECOND_NAME' => 'USER.SECOND_NAME', 
                     'U_LAST_NAME' => 'USER.LAST_NAME', 
                     'U_LOGIN' => 'USER.LOGIN'],
-                'filter' => ['ACTIVE' => 'Y'],
+                'filter' => $filter,
                 'order' => ['ID' => 'DESC'],
                 'offset' => $nav->getOffset(),
                 'limit' => $nav->getLimit(),

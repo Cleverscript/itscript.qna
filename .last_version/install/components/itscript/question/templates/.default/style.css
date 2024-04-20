@@ -1,3 +1,4 @@
+.hide{display: none;}
 .question-form-over{
     position: relative;
     min-height: 38px;
@@ -37,4 +38,24 @@
 }
 .question-list li .content-answer{
     margin-left: 60px;
+}
+.question-form-alert{
+    display: none;
+    position: relative;
+    padding: 0.75rem 1.25rem;
+    margin-bottom: 1rem;
+    border: 1px solid transparent;
+    border-radius: 0.25rem;
+}
+.question-form-alert.success {
+    color: #155724;
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+    display: block;
+}
+.question-form-alert.error{
+    color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+    display: block;
 }

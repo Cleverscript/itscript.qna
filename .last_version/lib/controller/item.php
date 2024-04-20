@@ -2,9 +2,14 @@
 namespace Itscript\Question\Controller;
 
 use Bitrix\Main\Error;
+use Bitrix\Main\Loader;
+use Bitrix\Main\Localization\Loc;
 use Itscript\Question\QuestionTable;
 use Bitrix\Main\Engine\Controller;
 use Bitrix\Main\Engine\ActionFilter;
+use Itscript\Question\Util;
+
+Loader::includeModule('itscript.question');
 
 class Item extends Controller
 {
@@ -34,7 +39,7 @@ class Item extends Controller
         $question->set('ENTITY_ID', $fields['ENTITY_ID']);
         $question->setActive($fields['ACTIVE']);
         $question->setUrl($fields['URL']);
-        $question->setQuestion($fields['QUESTION']);
+        $question->setQuestion(Util::clearQuestionText($fields['QUESTION']));
 
         $result = $question->save();
 
@@ -46,7 +51,7 @@ class Item extends Controller
         
         $id = $result->getId();
 
-		return ['ID' => $id];
+		return ['ID' => $id, 'ALERT' => Loc::getMessage('QUESTION_ADD_SUCCESS_ALERT', ['#ID#' => $id])];
 	}
 
 	public function viewAction(int $id):? array
