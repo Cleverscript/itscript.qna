@@ -65,13 +65,8 @@ $(document).ready(function(){
         return json;
     };
 
-    $('#question-add-btn-js').click(function(){
-        $(this).hide();
-        $('.question-form').show();
-    });
 
-    $('#question-form-btn-js').click(function(){
-
+    function runControllerAction() {
         let filedsObject = $("#question-form-js").serializeObject();
         filedsObject.URL = document.location.href;
 
@@ -81,8 +76,6 @@ $(document).ready(function(){
             }
         }).then(function (response) { // status == 'success'
             console.log(response);
-
-            //window.location.reload();
 
             let alertBlock = document.getElementById('question-form-js-alert');
             let formBlock = document.getElementById('question-form-js');
@@ -111,5 +104,33 @@ $(document).ready(function(){
             }
 
         });
+    }
+
+
+    // Show form add question
+    document.getElementById('question-add-btn-js').addEventListener('click', (el) => {
+        el.target.style.display = 'none';
+        document.getElementById('question-form-over-js').style.display = 'block';
     });
+
+    // Add question
+    document.getElementById('question-form-btn-js').addEventListener('click', (el) => {
+        runControllerAction();
+    });
+
+    // Rebuild events after ajax
+    BX.addCustomEvent('onAjaxSuccessFinish', BX.delegate(function (element, id) {
+        
+        document.getElementById('question-add-btn-js').addEventListener('click', (el) => {
+            el.target.style.display = 'none';
+            document.getElementById('question-form-over-js').style.display = 'block';
+        });
+
+        document.getElementById('question-form-btn-js').addEventListener('click', (el) => {
+            runControllerAction();
+        });
+       
+    }));
+
+    
 });

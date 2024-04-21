@@ -3,7 +3,7 @@
     <button id="question-add-btn-js" class="btn btn-primary question-add-btn">
         <?=GetMessage("T_QUESTION_ADD");?>
     </button>
-    <div class="question-form">
+    <div id="question-form-over-js" class="question-form">
         <div id="question-form-js-alert" class="question-form-alert"></div>
         <form id="question-form-js" action="" method="POST">
             <div class="over-field">
