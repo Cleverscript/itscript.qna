@@ -29,15 +29,7 @@ if ($APPLICATION->GetGroupRight($module_id)!="D") {
                 'more_url' => array(),
                 'items_id' => 'main'
             ),
-            array(
-                'text' => Loc::getMessage('ITSCRIPT_ANSWERS_MENU'),
-                'icon' => 'constructor-menu-icon-blocks-templates',
-                'page_icon' => 'constructor-menu-icon-blocks-templates',
-                'url' => '/bitrix/admin/itscript_answers_list.php',
-                'more_url' => array(),
-                'items_id' => 'main'
-            ),
-
+            
         )
     );
     
