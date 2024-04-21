@@ -29,7 +29,7 @@
                 <div class="question-author-photo" style="background: url('<?=$item["U_PHOTO"];?>');"></div>
                 <div class="content-over">
 
-                    <strong><?=($item["FULL_NAME"])??$item["U_LOGIN"];?></strong>
+                    <strong><?=$item["U_FULL_NAME"];?></strong>
                     <?php if($arParams['DISPLAY_DATE']=='Y'): ?>
                     <span class="publish-date"><?=$item["PUBLISH_DATE"];?></span>
                     <?php endif; ?>
@@ -39,10 +39,10 @@
             </div>
             <?php if (!empty($item["ANSWER"])): ?>
             <div class="question-content-wrap answer-content-wrap">
-                <div class="question-author-photo" style="background: url('<?=$item["U_PHOTO"];?>');"></div>
+                <div class="question-author-photo" style="background: url('<?=$item["A_PHOTO"];?>');"></div>
                 <div class="content-over">
 
-                    <strong><?=($item["FULL_NAME"])??$item["U_LOGIN"];?></strong>
+                    <strong><?=($item["A_FULL_NAME"])??$item["A_LOGIN"];?></strong>
                     <?php if($arParams['DISPLAY_DATE']=='Y'): ?>
                     <span class="publish-date"><?=$item["PUBLISH_DATE_ANSWER"];?></span>
                     <?php endif; ?>

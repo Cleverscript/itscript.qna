@@ -58,6 +58,12 @@ class Question extends CBitrixComponent
                     'U_LAST_NAME' => 'USER.LAST_NAME', 
                     'U_PHOTO' => 'USER.PERSONAL_PHOTO',
                     'U_SECOND_NAME' => 'USER.SECOND_NAME',
+
+                    'A_LOGIN' => 'ADMIN.LOGIN',
+                    'A_NAME' => 'ADMIN.NAME',  
+                    'A_LAST_NAME' => 'ADMIN.LAST_NAME', 
+                    'A_PHOTO' => 'ADMIN.PERSONAL_PHOTO',
+                    'A_SECOND_NAME' => 'ADMIN.SECOND_NAME',
                 ],
                 'filter' => $filter,
                 'order' => ['ID' => 'DESC'],
@@ -81,18 +87,25 @@ class Question extends CBitrixComponent
                     $val['U_NAME'], 
                     $val['U_SECOND_NAME']
                 ]));
-                $rows[$k]['FULL_NAME'] = $glueName ?? $val['U_LOGIN'];
+                $rows[$k]['U_FULL_NAME'] = $glueName ?? $val['U_LOGIN'];
 
                 // User photo
                 if ($val['U_PHOTO']) {
-
-                    //$file = FileTable::getByPrimary($val['U_PHOTO'], ['select' => ['*']])->fetchObject();
-                    //Util::debug($file);
-
                     $file = \CFile::GetFileArray($val['U_PHOTO']);
-                    //Util::debug($file);
-
                     $rows[$k]['U_PHOTO'] = $file['SRC'];
+                }
+
+                $glueName = trim(implode(' ', [
+                    $val['A_LAST_NAME'], 
+                    $val['A_NAME'], 
+                    $val['A_SECOND_NAME']
+                ]));
+                $rows[$k]['A_FULL_NAME'] = $glueName ?? $val['A_LOGIN'];
+
+                // Admin photo
+                if ($val['A_PHOTO']) {
+                    $file = \CFile::GetFileArray($val['A_PHOTO']);
+                    $rows[$k]['A_PHOTO'] = $file['SRC'];
                 }
             }
 
