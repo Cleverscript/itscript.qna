@@ -4,15 +4,14 @@ namespace Itscript\Qna\Controller;
 use Bitrix\Main\Error;
 use Itscript\Qna\QnaTable;
 use Bitrix\Main\Engine\Controller;
+use Bitrix\Main\Engine\CurrentUser;
 
 class Item extends Controller
 {
 	public function addAction(array $fields):? array
 	{
-        global $USER;
-
         $result = QnaTable::add(array(
-            'USER_ID' => $USER->GetID(),
+            'USER_ID' => CurrentUser::get()->getId(),
             'ENTITY_ID' => $fields['ENTITY_ID'],
             'ACTIVE' => $fields['ACTIVE'],
             'URL' => $fields['URL'],

@@ -9,6 +9,7 @@ use Bitrix\Main\Application;
 use Itscript\Qna\QnaTable;
 use Bitrix\Main\UI\PageNavigation;
 use Bitrix\Main\Type\DateTime;
+use Bitrix\Main\Engine\CurrentUser;
 
 $module_id = "itscript.qna";
 
@@ -85,13 +86,13 @@ if (check_bitrix_sessid()
         'QUESTION'=> trim($rawData->get('QUESTION')),
         'ANSWER'=> trim($rawData->get('ANSWER')),
         'URL' => trim($rawData->get('URL')),
-        'ADMIN_ID' => $USER->GetID()
+        'ADMIN_ID' => CurrentUser::get()->getId()
     ];
 
     // is add new
     if (!$eventID) {
         $fields['ENTITY_ID'] = $rawData->get('ENTITY_ID');
-        $fields['USER_ID'] = $USER->GetID();
+        $fields['USER_ID'] = CurrentUser::get()->getId();
     }
 
     if ($eventID == 0 || $copy) {

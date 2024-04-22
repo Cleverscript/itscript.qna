@@ -7,6 +7,7 @@ use Bitrix\Main\Localization\Loc;
 use Itscript\Qna\QnaTable;
 use Bitrix\Main\Engine\Controller;
 use Bitrix\Main\Engine\ActionFilter;
+use Bitrix\Main\Engine\CurrentUser;
 use Itscript\Qna\Util;
 
 Loader::includeModule('itscript.qna');
@@ -32,10 +33,8 @@ class Item extends Controller
 
 	public function addAction(array $fields):? array
 	{
-        global $USER;
-
         $question = QnaTable::createObject();
-        $question->set('USER_ID', $USER->GetID());
+        $question->set('USER_ID', CurrentUser::get()->getId());
         $question->set('ENTITY_ID', $fields['ENTITY_ID']);
         $question->setActive($fields['ACTIVE']);
         $question->setUrl($fields['URL']);

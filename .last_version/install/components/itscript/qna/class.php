@@ -5,6 +5,7 @@ use Bitrix\Main\Page\Asset;
 use Bitrix\Main\UI\PageNavigation;
 use Bitrix\Main\FileTable;
 use Bitrix\Main\Type\DateTime;
+use Bitrix\Main\Engine\CurrentUser;
 use Itscript\Qna\QnaTable;
 use Itscript\Qna\Util;
 
@@ -30,9 +31,7 @@ class Qna extends CBitrixComponent
 
 	public function executeComponent() {
 
-        global $APPLICATION, $USER;
-
-		if ($this->startResultCache(false, array(($this->arParams["CACHE_GROUPS"]==="N"? false: $USER->GetGroups())))) {
+		if ($this->startResultCache(false, array(($this->arParams["CACHE_GROUPS"]==="N"? false: CurrentUser::get()->GetGroups())))) {
 	        
             // add assets
             Asset::getInstance()->addCss($this->GetPath() . '/templates/' . $this->getTemplateName() . '/style.css');
