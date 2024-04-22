@@ -1,1 +1,0 @@
-<?php require($_SERVER["DOCUMENT_ROOT"]."/bitrix/modules/itscript.question/admin/itscript_questions_list.php");

@@ -1,17 +1,17 @@
 
-<div class="question-form-over">
-    <button id="question-add-btn-js" class="btn btn-primary question-add-btn">
+<div class="qna-form-over">
+    <button id="qna-add-btn-js" class="btn btn-primary qna-add-btn">
         <?=GetMessage("T_QUESTION_ADD");?>
     </button>
-    <div id="question-form-over-js" class="question-form">
-        <div id="question-form-js-alert" class="question-form-alert"></div>
-        <form id="question-form-js" action="" method="POST">
+    <div id="qna-form-over-js" class="qna-form">
+        <div id="qna-form-js-alert" class="qna-form-alert"></div>
+        <form id="qna-form-js" action="" method="POST">
             <div class="over-field">
-                <label for="question-field"><?=GetMessage("T_QUESTION_FIELD_LABEL");?></label>
-                <textarea id="question-field" name="QUESTION" cols="95"rows="5"></textarea>
+                <label for="qna-field"><?=GetMessage("T_QUESTION_FIELD_LABEL");?></label>
+                <textarea id="qna-field" name="QUESTION" cols="95" rows="5"></textarea>
             </div>
             <div class="over-field">
-                <button id="question-form-btn-js" type="button" class="btn btn-primary question-send-btn">
+                <button id="qna-form-btn-js" type="button" class="btn btn-primary qna-send-btn">
                     <?=GetMessage("T_BUTTON_SEND");?>
                 </button>
             </div>
@@ -22,11 +22,11 @@
 </div>
 
 <?php if (!empty($arResult['ITEMS'])): ?>
-    <ul class="question-list">
+    <ul class="qna-list">
     <?php foreach($arResult['ITEMS'] as $item): ?>
         <li>
-            <div class="question-content-wrap">
-                <div class="question-author-photo" style="background: url('<?=$item["U_PHOTO"];?>');"></div>
+            <div class="qna-content-wrap">
+                <div class="qna-author-photo" style="background: url('<?=$item["U_PHOTO"];?>');"></div>
                 <div class="content-over">
 
                     <strong><?=$item["U_FULL_NAME"];?></strong>
@@ -38,8 +38,8 @@
                 </div>
             </div>
             <?php if (!empty($item["ANSWER"])): ?>
-            <div class="question-content-wrap answer-content-wrap">
-                <div class="question-author-photo" style="background: url('<?=$item["A_PHOTO"];?>');"></div>
+            <div class="qna-content-wrap answer-content-wrap">
+                <div class="qna-author-photo" style="background: url('<?=$item["A_PHOTO"];?>');"></div>
                 <div class="content-over">
 
                     <strong><?=($item["A_FULL_NAME"])??$item["A_LOGIN"];?></strong>

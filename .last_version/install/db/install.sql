@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS `b_itscript_question` (
+CREATE TABLE IF NOT EXISTS `b_itscript_qna` (
     `ID` int NOT NULL AUTO_INCREMENT,
     `USER_ID` int NOT NULL,
     `ADMIN_ID` int NOT NULL,

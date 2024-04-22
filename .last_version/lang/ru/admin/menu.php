@@ -1,5 +1,5 @@
 <?php
-$MESS["ITSCRIPT_QUESTION_MENU_ROOT_NAME"] = "Вопрос - ответ";
-$MESS["ITSCRIPT_QUESTIONS_MENU"] = "Вопросы";
+$MESS["ITSCRIPT_QNA_MENU_ROOT_NAME"] = "Q&A";
+$MESS["ITSCRIPT_QNA_MENU"] = "Вопросы и ответы";
 $MESS[""] = "";
 $MESS[""] = "";

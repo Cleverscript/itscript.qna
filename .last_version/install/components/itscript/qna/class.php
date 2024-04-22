@@ -5,12 +5,12 @@ use Bitrix\Main\Page\Asset;
 use Bitrix\Main\UI\PageNavigation;
 use Bitrix\Main\FileTable;
 use Bitrix\Main\Type\DateTime;
-use Itscript\Question\QuestionTable;
-use Itscript\Question\Util;
+use Itscript\Qna\QnaTable;
+use Itscript\Qna\Util;
 
-Loader::includeModule('itscript.question');
+Loader::includeModule('itscript.qna');
 
-class Question extends CBitrixComponent
+class Qna extends CBitrixComponent
 {
 	public function onPrepareComponentParams($arParams) {
 
@@ -50,7 +50,7 @@ class Question extends CBitrixComponent
             }
 
             // Get ORM entity
-            $questions = QuestionTable::getList([
+            $questions = QnaTable::getList([
                 'select' => [
                     '*', 
                     'U_LOGIN' => 'USER.LOGIN',

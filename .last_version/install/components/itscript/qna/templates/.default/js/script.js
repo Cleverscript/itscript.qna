@@ -67,18 +67,18 @@ $(document).ready(function(){
 
 
     function runControllerAction() {
-        let filedsObject = $("#question-form-js").serializeObject();
+        let filedsObject = $("#qna-form-js").serializeObject();
         filedsObject.URL = document.location.href;
 
-        BX.ajax.runAction('itscript:question.Item.add', {
+        BX.ajax.runAction('itscript:qna.Item.add', {
             data: {
                 fields: filedsObject
             }
         }).then(function (response) { // status == 'success'
             console.log(response);
 
-            let alertBlock = document.getElementById('question-form-js-alert');
-            let formBlock = document.getElementById('question-form-js');
+            let alertBlock = document.getElementById('qna-form-js-alert');
+            let formBlock = document.getElementById('qna-form-js');
             alertBlock.className += ' success';
             formBlock.className += ' hide';
 
@@ -87,7 +87,7 @@ $(document).ready(function(){
         }, function (response) { // status !== 'success'
             console.log(response);
 
-            let alertBlock = document.getElementById('question-form-js-alert');
+            let alertBlock = document.getElementById('qna-form-js-alert');
             alertBlock.className += ' error';
 
             for (let i = 0; i < response.errors.length; i++) {
@@ -108,25 +108,25 @@ $(document).ready(function(){
 
 
     // Show form add question
-    document.getElementById('question-add-btn-js').addEventListener('click', (el) => {
+    document.getElementById('qna-add-btn-js').addEventListener('click', (el) => {
         el.target.style.display = 'none';
-        document.getElementById('question-form-over-js').style.display = 'block';
+        document.getElementById('qna-form-over-js').style.display = 'block';
     });
 
     // Add question
-    document.getElementById('question-form-btn-js').addEventListener('click', (el) => {
+    document.getElementById('qna-form-btn-js').addEventListener('click', (el) => {
         runControllerAction();
     });
 
     // Rebuild events after ajax
     BX.addCustomEvent('onAjaxSuccessFinish', BX.delegate(function (element, id) {
         
-        document.getElementById('question-add-btn-js').addEventListener('click', (el) => {
+        document.getElementById('qna-add-btn-js').addEventListener('click', (el) => {
             el.target.style.display = 'none';
-            document.getElementById('question-form-over-js').style.display = 'block';
+            document.getElementById('qna-form-over-js').style.display = 'block';
         });
 
-        document.getElementById('question-form-btn-js').addEventListener('click', (el) => {
+        document.getElementById('qna-form-btn-js').addEventListener('click', (el) => {
             runControllerAction();
         });
        

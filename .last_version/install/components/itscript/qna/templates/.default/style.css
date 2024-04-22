@@ -1,54 +1,54 @@
 .hide{display: none;}
-.question-form-over{
+.qna-form-over{
     position: relative;
     min-height: 38px;
     width: 100%;
     padding: 15px 0;
 }
-.question-add-btn{position: absolute; right: 0; top: 10px;} 
-.question-form{
+.qna-add-btn{position: absolute; right: 0; top: 10px;} 
+.qna-form{
     padding: 10px;
     background-color: #f8f9fa !important;
     display: none;
 }
-.question-form .over-field{margin-bottom:15px;}
-.question-form textarea{
+.qna-form .over-field{margin-bottom:15px;}
+.qna-form textarea{
     display: block;
     width: 100%;
     height: 127px;
     padding: 10px;
     resize: none;
 }
-.question-list li{
+.qna-list li{
     list-style: none;
     margin-bottom: 10px;
     font-size: 14px;
     line-height: 18px;
 }
-.question-list li .clr{
+.qna-list li .clr{
     content:''; 
     display:block; 
     clear:both;
 }
-.question-content-wrap{}
+.qna-content-wrap{}
 .answer-content-wrap{margin-left: 60px;}
 .content-over{
     padding-left: 58px;
 }
-.question-list li strong {
+.qna-list li strong {
     color: #3173b6;
     font-weight: normal;
 }
-.question-list li .publish-date{
+.qna-list li .publish-date{
     color: #a0a7ab;
 }
-.question-list li .text{
+.qna-list li .text{
     margin-bottom: 35px;
 }
-.question-list li .content-answer{
+.qna-list li .content-answer{
     margin-left: 60px;
 }
-.question-author-photo, .question-author-photo-empty {
+.qna-author-photo, .qna-author-photo-empty {
     border-radius: 45px;
     float: left;
     margin-top: 3px;
@@ -56,7 +56,7 @@
     height: 45px;
     background-repeat: no-repeat;
 }
-.question-form-alert{
+.qna-form-alert{
     display: none;
     position: relative;
     padding: 0.75rem 1.25rem;
@@ -64,13 +64,13 @@
     border: 1px solid transparent;
     border-radius: 0.25rem;
 }
-.question-form-alert.success {
+.qna-form-alert.success {
     color: #155724;
     background-color: #d4edda;
     border-color: #c3e6cb;
     display: block;
 }
-.question-form-alert.error{
+.qna-form-alert.error{
     color: #721c24;
     background-color: #f8d7da;
     border-color: #f5c6cb;

@@ -1,8 +1,8 @@
 <?php
-namespace Itscript\Question\Controller;
+namespace Itscript\Qna\Controller;
 
 use Bitrix\Main\Error;
-use Itscript\Question\QuestionTable;
+use Itscript\Qna\QnaTable;
 use Bitrix\Main\Engine\Controller;
 
 class Item extends Controller
@@ -11,7 +11,7 @@ class Item extends Controller
 	{
         global $USER;
 
-        $result = QuestionTable::add(array(
+        $result = QnaTable::add(array(
             'USER_ID' => $USER->GetID(),
             'ENTITY_ID' => $fields['ENTITY_ID'],
             'ACTIVE' => $fields['ACTIVE'],
@@ -32,7 +32,7 @@ class Item extends Controller
 	public function viewAction(int $id):? array
 	{
 
-        $book = QuestionTable::getByPrimary($id)->fetchObject();
+        $book = QnaTable::getByPrimary($id)->fetchObject();
 
         echo '<pre>';
         var_dump($book);

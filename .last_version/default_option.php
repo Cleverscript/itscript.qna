@@ -1,8 +1,4 @@
 <?php
-use \Bitrix\Main\Localization\Loc;
-
-Loc::loadMessages(__FILE__);
-
-$itscript_question_default_option = array(
-    "ITSCRIPT_CONFIG_DEBUG" => 'N',
+$itscript_qna_default_option = array(
+    "ITSCRIPT_QNA_CONFIG_DEBUG" => 'N',
 );

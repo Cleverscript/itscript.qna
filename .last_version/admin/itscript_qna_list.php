@@ -6,10 +6,10 @@ use Bitrix\Main\Loader;
 use Bitrix\Main\Localization\Loc; 
 use Bitrix\Main\Config\Option;
 use Bitrix\Main\Application;
-use Itscript\Question\QuestionTable;
+use Itscript\Qna\QnaTable;
 use Bitrix\Main\UI\PageNavigation;
 
-$module_id = "itscript.question";
+$module_id = "itscript.qna";
 
 require_once($_SERVER['DOCUMENT_ROOT'] . '/bitrix/modules/main/include/prolog_admin_before.php');
 require_once(dirname(__FILE__)."/../include.php");
@@ -22,12 +22,12 @@ $FORM_RIGHT = $APPLICATION->GetGroupRight($module_id);
 if($FORM_RIGHT<="D") $APPLICATION->AuthForm(Loc::getMessage("ACCESS_DENIED"));
 
 if(!Loader::includeModule($module_id)){
-	CAdminMessage::ShowMessage(Loc::getMessage("ITSCRIPT_QUESTION_INCLUDE_MODULE_ERROR", ['#MODULE_ID#' => $module_id]));
+	CAdminMessage::ShowMessage(Loc::getMessage("ITSCRIPT_QNA_INCLUDE_MODULE_ERROR", ['#MODULE_ID#' => $module_id]));
 }
 
 CJSCore::Init(array('ajax', 'json', 'ls', 'session', 'jquery', 'popup', 'pull'));
 
-$adminListTableID = 'b_itscript_question';
+$adminListTableID = 'b_itscript_qna';
 
 $adminSort = new CAdminSorting($adminListTableID, 'ID', 'ASC');
 $adminList = new CAdminUiList($adminListTableID, $adminSort);
@@ -42,19 +42,19 @@ $filterFields = array(
     ),
     array(
         "id" => "ENTITY_ID",
-        "name" => Loc::getMessage("ITSCRIPT_QUESTION_ENTITY_ID_ADMIN_FILTER"),
+        "name" => Loc::getMessage("ITSCRIPT_QNA_ENTITY_ID_ADMIN_FILTER"),
         "type" => "int",
         "filterable" => "="
     ),
     array(
         "id" => "QUESTION",
-        "name" => Loc::getMessage("ITSCRIPT_QUESTION_TITLE_QUESTION"),
+        "name" => Loc::getMessage("ITSCRIPT_QNA_TITLE_QUESTION"),
         "type" => "text",
         "filterable" => "%"
     ),
     array(
         "id" => "ANSWER",
-        "name" => Loc::getMessage("ITSCRIPT_QUESTION_TITLE_ANSWER"),
+        "name" => Loc::getMessage("ITSCRIPT_QNA_TITLE_ANSWER"),
         "type" => "text",
         "filterable" => "%"
     ),
@@ -77,7 +77,7 @@ if ($listID = $adminList->GroupAction()) {
 
     if ($_REQUEST['action_target'] == 'selected') {
         $listID = array();
-        $formIterator = QuestionTable::getList(array(
+        $formIterator = QnaTable::getList(array(
             'select' => array('ID'),
             'filter' => $filter
         ));
@@ -89,7 +89,7 @@ if ($listID = $adminList->GroupAction()) {
 
     if ($adminList->IsGroupActionToAll()) {
         $arID = array();
-        $formIterator = QuestionTable::getList(array(
+        $formIterator = QnaTable::getList(array(
             'select' => array('ID'),
             'filter' => $filter
         ));
@@ -105,7 +105,7 @@ if ($listID = $adminList->GroupAction()) {
         switch ($action) {
             case 'delete':
                 foreach ($listID as &$recordId) {
-                    $result = QuestionTable::delete($recordId);
+                    $result = QnaTable::delete($recordId);
                     if (!$result->isSuccess()) {
                         $adminList->AddGroupError(implode('<br>', $result->getErrorMessages()), $recordId);
                     }
@@ -133,43 +133,43 @@ $headerList['ID'] = array(
 );
 $headerList['PUBLISH_DATE'] = array(
     'id' => 'PUBLISH_DATE',
-    'content' => Loc::getMessage('ITSCRIPT_QUESTION_TITLE_PUBLISH_DATE'),
-    'title' => Loc::getMessage('ITSCRIPT_QUESTION_TITLE_PUBLISH_DATE'),
+    'content' => Loc::getMessage('ITSCRIPT_QNA_TITLE_PUBLISH_DATE'),
+    'title' => Loc::getMessage('ITSCRIPT_QNA_TITLE_PUBLISH_DATE'),
     'sort' => 'CREATED',
     'default' => true
 );
 $headerList['QUESTION'] = array(
     'id' => 'QUESTION',
-    'content' => Loc::getMessage('ITSCRIPT_QUESTION_TITLE_QUESTION'),
-    'title' => Loc::getMessage('ITSCRIPT_QUESTION_TITLE_QUESTION'),
+    'content' => Loc::getMessage('ITSCRIPT_QNA_TITLE_QUESTION'),
+    'title' => Loc::getMessage('ITSCRIPT_QNA_TITLE_QUESTION'),
     'sort' => 'QUESTION',
     'default' => false
 );
 $headerList['ANSWER'] = array(
     'id' => 'ANSWER',
-    'content' => Loc::getMessage('ITSCRIPT_QUESTION_TITLE_ANSWER'),
-    'title' => Loc::getMessage('ITSCRIPT_QUESTION_TITLE_ANSWER'),
+    'content' => Loc::getMessage('ITSCRIPT_QNA_TITLE_ANSWER'),
+    'title' => Loc::getMessage('ITSCRIPT_QNA_TITLE_ANSWER'),
     'sort' => 'ANSWER',
     'default' => false
 );
 $headerList['ACTIVE'] = array(
     'id' => 'ACTIVE',
-    'content' => Loc::getMessage('ITSCRIPT_QUESTION_TITLE_ACTIVE'),
-    'title' => Loc::getMessage('ITSCRIPT_QUESTION_TITLE_ACTIVE'),
+    'content' => Loc::getMessage('ITSCRIPT_QNA_TITLE_ACTIVE'),
+    'title' => Loc::getMessage('ITSCRIPT_QNA_TITLE_ACTIVE'),
     'sort' => 'ACTIVE',
     'default' => false
 );
 $headerList['URL'] = array(
     'id' => 'URL',
-    'content' => Loc::getMessage('ITSCRIPT_QUESTION_TITLE_URL'),
-    'title' => Loc::getMessage('ITSCRIPT_QUESTION_TITLE_URL'),
+    'content' => Loc::getMessage('ITSCRIPT_QNA_TITLE_URL'),
+    'title' => Loc::getMessage('ITSCRIPT_QNA_TITLE_URL'),
     'sort' => 'URL',
     'default' => true
 );
 $headerList['ENTITY_ID'] = array(
     'id' => 'ENTITY_ID',
-    'content' => Loc::getMessage('ITSCRIPT_QUESTION_TITLE_ENTITY_ID'),
-    'title' => Loc::getMessage('ITSCRIPT_QUESTION_TITLE_ENTITY_ID'),
+    'content' => Loc::getMessage('ITSCRIPT_QNA_TITLE_ENTITY_ID'),
+    'title' => Loc::getMessage('ITSCRIPT_QNA_TITLE_ENTITY_ID'),
     'sort' => 'ENTITY_ID',
     'default' => true
 );
@@ -216,7 +216,7 @@ if ($usePageNavigation) {
 }
 $totalPages = 0;
 if ($usePageNavigation) {
-    $totalCount = QuestionTable::getCount($getListParams['filter']);
+    $totalCount = QnaTable::getCount($getListParams['filter']);
     if ($totalCount > 0) {
         $totalPages = ceil($totalCount / $navyParams['SIZEN']);
         if ($navyParams['PAGEN'] > $totalPages)
@@ -245,7 +245,7 @@ print_r([
 echo '</pre>';*/
 
 
-$formIterator = new CAdminUiResult(QuestionTable::getList($getListParams), $adminListTableID);
+$formIterator = new CAdminUiResult(QnaTable::getList($getListParams), $adminListTableID);
 if ($usePageNavigation) {
     $formIterator->NavStart($getListParams['limit'], $navyParams['SHOW_ALL'], $navyParams['PAGEN']);
     $formIterator->NavRecordCount = $totalCount;
@@ -256,11 +256,11 @@ if ($usePageNavigation) {
 }
 $onlyDel = false;
 $yesNo = [
-    Loc::getMessage("ITSCRIPT_QUESTION_TITLE_NO"),
-    Loc::getMessage("ITSCRIPT_QUESTION_TITLE_YES"),
+    Loc::getMessage("ITSCRIPT_QNA_TITLE_NO"),
+    Loc::getMessage("ITSCRIPT_QNA_TITLE_YES"),
 ];
 CTimeZone::Disable();
-$adminList->SetNavigationParams($formIterator, array("BASE_LINK" => $selfFolderUrl . "itscript_question_list.php"));
+$adminList->SetNavigationParams($formIterator, array("BASE_LINK" => $selfFolderUrl . "itscript_qna_list.php"));
 while($form = $formIterator->fetch()) {
     $result[]=$form;
 }
@@ -270,14 +270,14 @@ $prm['SELECT'] = $getListParams['select'];
 foreach($result as $form)
 {
     $form['ID'] = (int)$form['ID'];
-    $urlEdit = $selfFolderUrl . 'itscript_question_edit.php?ID=' . $form['ID'] . '&lang=' . LANGUAGE_ID;
+    $urlEdit = $selfFolderUrl . 'itscript_qna_edit.php?ID=' . $form['ID'] . '&lang=' . LANGUAGE_ID;
     $urlEdit = $adminSidePanelHelper->editUrlToPublicPage($urlEdit);
 
     $rowList[$form['ID']] = $row = &$adminList->AddRow(
         $form['ID'],
         $form,
         $urlEdit,
-        Loc::getMessage("ITSCRIPT_QUESTION_EDIT")
+        Loc::getMessage("ITSCRIPT_QNA_EDIT")
     );
 
     if ($onlyDel) {
@@ -310,7 +310,7 @@ foreach($result as $form)
     if (!$onlyDel) {
         $actions[] = array(
             'ICON' => 'edit',
-            'TEXT' => Loc::getMessage("ITSCRIPT_QUESTION_EDIT"),
+            'TEXT' => Loc::getMessage("ITSCRIPT_QNA_EDIT"),
             'LINK' => $urlEdit,
             'DEFAULT' => true
         );
@@ -318,8 +318,8 @@ foreach($result as $form)
     if (!$readOnly) {
         $actions[] = array(
             'ICON' => 'delete',
-            'TEXT' => Loc::getMessage("ITSCRIPT_QUESTION_DELETE"),
-            'ACTION' => "if (confirm('" . Loc::getMessage("ITSCRIPT_QUESTION_DELETE_ALERT") . "')) " . $adminList->ActionDoGroup($form['ID'], 'delete')
+            'TEXT' => Loc::getMessage("ITSCRIPT_QNA_DELETE"),
+            'ACTION' => "if (confirm('" . Loc::getMessage("ITSCRIPT_QNA_DELETE_ALERT") . "')) " . $adminList->ActionDoGroup($form['ID'], 'delete')
         );
     }
     $row->AddActions($actions);
@@ -336,24 +336,24 @@ $adminList->AddGroupActionTable([
 $contextMenu = array();
 
 if (!$readOnly) {
-    $addUrl = $selfFolderUrl . "itscript_question_edit.php?lang=" . LANGUAGE_ID;
+    $addUrl = $selfFolderUrl . "itscript_qna_edit.php?lang=" . LANGUAGE_ID;
     $addUrl = $adminSidePanelHelper->editUrlToPublicPage($addUrl);
     $contextMenu[] = array(
         'ICON' => 'btn_new',
-        'TEXT' => Loc::getMessage('ITSCRIPT_QUESTION_ADD'),
-        'TITLE' => Loc::getMessage('ITSCRIPT_QUESTION_ADD'),
+        'TEXT' => Loc::getMessage('ITSCRIPT_QNA_ADD'),
+        'TITLE' => Loc::getMessage('ITSCRIPT_QNA_ADD'),
         'LINK' => $addUrl
     );
 }
 
 if (!empty($contextMenu)) {
-    $adminList->setContextSettings(array("pagePath" => $selfFolderUrl . "itscript_question_list.php"));
+    $adminList->setContextSettings(array("pagePath" => $selfFolderUrl . "itscript_qna_list.php"));
     $adminList->AddAdminContextMenu($contextMenu);
 }
 
 $adminList->CheckListMode();
 
-$APPLICATION->SetTitle(Loc::getMessage("ITSCRIPT_QUESTION_PAGE_TITLE"));
+$APPLICATION->SetTitle(Loc::getMessage("ITSCRIPT_QNA_PAGE_TITLE"));
 
 require($_SERVER['DOCUMENT_ROOT'] . '/bitrix/modules/main/include/prolog_admin_after.php');
 

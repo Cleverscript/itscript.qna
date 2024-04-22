@@ -7,7 +7,7 @@ use Bitrix\Main\ModuleManager;
 
 IncludeModuleLangFile(__FILE__);
 
-$module_id = "itscript.question";
+$module_id = "itscript.qna";
 
 global $APPLICATION, $adminMenu;
 
@@ -15,17 +15,17 @@ if ($APPLICATION->GetGroupRight($module_id)!="D") {
 
     $arMenu = array(
         'parent_menu' => 'global_itscript',
-        'text' => Loc::getMessage('ITSCRIPT_QUESTION_MENU_ROOT_NAME'),
+        'text' => Loc::getMessage('ITSCRIPT_QNA_MENU_ROOT_NAME'),
         'icon' => "constructor-menu-icon",
         'page_icon' => 'constructor-menu-icon',
         'items_id' => 'intec_constructor',
         'items' => array(
 
             array(
-                'text' => Loc::getMessage('ITSCRIPT_QUESTIONS_MENU'),
+                'text' => Loc::getMessage('ITSCRIPT_QNA_MENU'),
                 'icon' => 'constructor-menu-icon-blocks-templates',
                 'page_icon' => 'constructor-menu-icon-blocks-templates',
-                'url' => '/bitrix/admin/itscript_questions_list.php',
+                'url' => '/bitrix/admin/itscript_qna_list.php',
                 'more_url' => array(),
                 'items_id' => 'main'
             ),
@@ -34,8 +34,6 @@ if ($APPLICATION->GetGroupRight($module_id)!="D") {
     );
     
     return $arMenu;
-
-
 }
 
 return false;

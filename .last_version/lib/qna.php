@@ -1,5 +1,5 @@
 <?php
-namespace Itscript\Question;
+namespace Itscript\Qna;
 
 use Bitrix\Main\UserTable;
 use Bitrix\Main\Type\Date;
@@ -15,7 +15,7 @@ use Bitrix\Main\ORM\Fields\Relations\Reference;
 use Bitrix\Main\ORM\Data\DataManager;
 use Bitrix\Main\ORM\Query\Join;
 
-class QuestionTable extends DataManager
+class QnaTable extends DataManager
 {
 	public static function getMap()
 	{
@@ -27,7 +27,7 @@ class QuestionTable extends DataManager
             ]),
 
 			new IntegerField('USER_ID', [
-				'title' => Loc::getMessage('QUESTION_TABLE_TITLE_USER_ID'),
+				'title' => Loc::getMessage('QNA_TABLE_TITLE_USER_ID'),
 				'required' => true,
 				'format' => '/^[0-9]{1,}$/',
             ]),
@@ -40,7 +40,7 @@ class QuestionTable extends DataManager
 
 
 			new IntegerField('ADMIN_ID', [
-				'title' => Loc::getMessage('QUESTION_TABLE_TITLE_ADMIN_ID'),
+				'title' => Loc::getMessage('QNA_TABLE_TITLE_ADMIN_ID'),
 				/*'required' => true,*/
 				'format' => '/^[0-9]{1,}$/',
             ]),
@@ -52,18 +52,18 @@ class QuestionTable extends DataManager
 			))->configureJoinType('inner'),
 
 			new IntegerField('ENTITY_ID', [
-				'title' => Loc::getMessage('QUESTION_TABLE_TITLE_ENTITY_ID'),
+				'title' => Loc::getMessage('QNA_TABLE_TITLE_ENTITY_ID'),
 				'required' => true,
 				'format' => '/^[0-9]{1,}$/',
             ]),
 
             new BooleanField('ACTIVE', [
-				'title' => Loc::getMessage('QUESTION_TABLE_TITLE_ACTIVE'),
+				'title' => Loc::getMessage('QNA_TABLE_TITLE_ACTIVE'),
                 'values' => array('N', 'Y')
             ]),
 
 			new StringField('URL', [
-				'title' => Loc::getMessage('QUESTION_TABLE_TITLE_URL'),
+				'title' => Loc::getMessage('QNA_TABLE_TITLE_URL'),
                 'required' => true,
 				'size' => 1000,
 				'validation' => function () {
@@ -75,7 +75,7 @@ class QuestionTable extends DataManager
             ]),
 
 			new StringField('QUESTION', [
-				'title' => Loc::getMessage('QUESTION_TABLE_TITLE_QUESTION'),
+				'title' => Loc::getMessage('QNA_TABLE_TITLE_QUESTION'),
                 'required' => true,
 				'size' => 8000,
 				'validation' => function () {
@@ -86,7 +86,7 @@ class QuestionTable extends DataManager
             ]),
 
 			new StringField('ANSWER', [
-				'title' => Loc::getMessage('QUESTION_TABLE_TITLE_ANSWER'),
+				'title' => Loc::getMessage('QNA_TABLE_TITLE_ANSWER'),
 				'size' => 8000,
 				'validation' => function () {
 					return [
@@ -96,12 +96,12 @@ class QuestionTable extends DataManager
             ]),
 
 			new DatetimeField('PUBLISH_DATE', [
-				'title' => Loc::getMessage('QUESTION_TABLE_TITLE_PUBLISH_DATE'),
+				'title' => Loc::getMessage('QNA_TABLE_TITLE_PUBLISH_DATE'),
 				'default_value' => new DateTime
 			]),
 
 			new DatetimeField('PUBLISH_DATE_ANSWER', [
-				'title' => Loc::getMessage('QUESTION_TABLE_TITLE_PUBLISH_DATE_ANSWER'),
+				'title' => Loc::getMessage('QNA_TABLE_TITLE_PUBLISH_DATE_ANSWER'),
 				'default_value' => new DateTime
 			]),
 

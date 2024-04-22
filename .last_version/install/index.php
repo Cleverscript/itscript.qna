@@ -12,15 +12,15 @@ use Bitrix\Main\IO\Directory;
 Loc::loadMessages(__FILE__);
 
 /**
- * Class itscript_question
+ * Class itscript_qna
  */
 
-if (class_exists("itscript_question")) return;
+if (class_exists("itscript_qna")) return;
 
-class itscript_question extends CModule
+class itscript_qna extends CModule
 {
-    public $MODULE_ID = "itscript.question";
-    public $SOLUTION_NAME = "question";
+    public $MODULE_ID = "itscript.qna";
+    public $SOLUTION_NAME = "qna";
     public $MODULE_VERSION;
     public $MODULE_VERSION_DATE;
     public $MODULE_NAME;
@@ -45,11 +45,11 @@ class itscript_question extends CModule
 
         $this->MODULE_VERSION = $arModuleVersion["VERSION"];
         $this->MODULE_VERSION_DATE = $arModuleVersion["VERSION_DATE"];
-        $this->MODULE_NAME = Loc::getMessage("ITSCRIPT_QUESTION_MODULE_NAME");
-        $this->MODULE_DESCRIPTION = Loc::getMessage("ITSCRIPT_QUESTION_MODULE_DESC");
+        $this->MODULE_NAME = Loc::getMessage("ITSCRIPT_QNA_MODULE_NAME");
+        $this->MODULE_DESCRIPTION = Loc::getMessage("ITSCRIPT_QNA_MODULE_DESC");
 
-        $this->PARTNER_NAME = Loc::getMessage("ITSCRIPT_QUESTION_PARTNER_NAME");
-        $this->PARTNER_URI = Loc::getMessage("ITSCRIPT_QUESTION_PARTNER_URI");
+        $this->PARTNER_NAME = Loc::getMessage("ITSCRIPT_QNA_PARTNER_NAME");
+        $this->PARTNER_URI = Loc::getMessage("ITSCRIPT_QNA_PARTNER_URI");
 
         $this->MODULE_SORT = 1;
         $this->SHOW_SUPER_ADMIN_GROUP_RIGHTS = 'Y';
@@ -115,10 +115,10 @@ class itscript_question extends CModule
     function UnInstallFiles() {
 
         File::deleteFile(
-            $_SERVER["DOCUMENT_ROOT"]."/bitrix/admin/itscript_questions_list.php"
+            $_SERVER["DOCUMENT_ROOT"]."/bitrix/admin/itscript_qna_list.php"
         );
         File::deleteFile(
-            $_SERVER["DOCUMENT_ROOT"]."/bitrix/admin/itscript_questions_edit.php"
+            $_SERVER["DOCUMENT_ROOT"]."/bitrix/admin/itscript_qna_edit.php"
         );
 
         //Directory::deleteDirectory($_SERVER["DOCUMENT_ROOT"]."/bitrix/components/{$this->getVendor()}");
@@ -131,7 +131,7 @@ class itscript_question extends CModule
     function InstallEvents() {
 
         $eventManager = EventManager::getInstance();
-        $eventManager->registerEventHandler('main', 'OnBuildGlobalMenu', $this->MODULE_ID, '\Itscript\Question\Menu', 'adminOnBuildGlobalMenu', 9999);
+        $eventManager->registerEventHandler('main', 'OnBuildGlobalMenu', $this->MODULE_ID, '\Itscript\Qna\Menu', 'adminOnBuildGlobalMenu', 9999);
     }
 
     /**
@@ -140,7 +140,7 @@ class itscript_question extends CModule
     function UnInstallEvents() {
 
         $eventManager = EventManager::getInstance();
-        $eventManager->unRegisterEventHandler('main', 'OnBuildGlobalMenu', $this->MODULE_ID, '\Itscript\Question\Menu', 'adminOnBuildGlobalMenu');
+        $eventManager->unRegisterEventHandler('main', 'OnBuildGlobalMenu', $this->MODULE_ID, '\Itscript\Qna\Menu', 'adminOnBuildGlobalMenu');
     
     }
 
@@ -185,10 +185,10 @@ class itscript_question extends CModule
     	if (!Loader::includeModule($module_id)) {
 			\CAdminMessage::ShowMessage(
                 [
-					"MESSAGE" => GetMessage("ITSCRIPT_QUESTION_CHECK_ISS_MODULE_EXT_ERROR",
+					"MESSAGE" => GetMessage("ITSCRIPT_QNA_CHECK_ISS_MODULE_EXT_ERROR",
 						["#MODULE_ID#" => $module_id]
 					),
-					"DETAILS" => GetMessage("ITSCRIPT_QUESTION_CHECK_ISS_MODULE_EXT_ERROR_ALT",
+					"DETAILS" => GetMessage("ITSCRIPT_QNA_CHECK_ISS_MODULE_EXT_ERROR_ALT",
 						["#MODULE_ID#" => $module_id]
 					),
 					"HTML" => true,
@@ -233,10 +233,10 @@ class itscript_question extends CModule
         return [
             "reference_id" => array("D", "K", "S", "W"),
             "reference" => [
-                "[D] " . Loc::getMessage("ITSCRIPT_QUESTION_DENIED"),
-                "[K] " . Loc::getMessage("ITSCRIPT_QUESTION_READ_COMPONENT"),
-                "[S] " . Loc::getMessage("ITSCRIPT_QUESTION_WRITE_SETTINGS"),
-                "[W] " . Loc::getMessage("ITSCRIPT_QUESTION_FULL")
+                "[D] " . Loc::getMessage("ITSCRIPT_QNA_DENIED"),
+                "[K] " . Loc::getMessage("ITSCRIPT_QNA_READ_COMPONENT"),
+                "[S] " . Loc::getMessage("ITSCRIPT_QNA_WRITE_SETTINGS"),
+                "[W] " . Loc::getMessage("ITSCRIPT_QNA_FULL")
             ]
         ];
     }

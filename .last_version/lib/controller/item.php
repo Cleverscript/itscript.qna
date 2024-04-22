@@ -1,15 +1,15 @@
 <?php
-namespace Itscript\Question\Controller;
+namespace Itscript\Qna\Controller;
 
 use Bitrix\Main\Error;
 use Bitrix\Main\Loader;
 use Bitrix\Main\Localization\Loc;
-use Itscript\Question\QuestionTable;
+use Itscript\Qna\QnaTable;
 use Bitrix\Main\Engine\Controller;
 use Bitrix\Main\Engine\ActionFilter;
-use Itscript\Question\Util;
+use Itscript\Qna\Util;
 
-Loader::includeModule('itscript.question');
+Loader::includeModule('itscript.qna');
 
 class Item extends Controller
 {
@@ -34,7 +34,7 @@ class Item extends Controller
 	{
         global $USER;
 
-        $question = QuestionTable::createObject();
+        $question = QnaTable::createObject();
         $question->set('USER_ID', $USER->GetID());
         $question->set('ENTITY_ID', $fields['ENTITY_ID']);
         $question->setActive($fields['ACTIVE']);
@@ -51,13 +51,13 @@ class Item extends Controller
         
         $id = $result->getId();
 
-		return ['ID' => $id, 'ALERT' => Loc::getMessage('QUESTION_ADD_SUCCESS_ALERT', ['#ID#' => $id])];
+		return ['ID' => $id, 'ALERT' => Loc::getMessage('QNA_ADD_SUCCESS_ALERT', ['#ID#' => $id])];
 	}
 
 	public function viewAction(int $id):? array
 	{
 
-        $book = QuestionTable::getByPrimary($id)->fetchObject();
+        $book = QnaTable::getByPrimary($id)->fetchObject();
 
         echo '<pre>';
         var_dump($book);

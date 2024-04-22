@@ -1,5 +1,5 @@
 <?php
-namespace Itscript\Question;
+namespace Itscript\Qna;
 
 use Bitrix\Main;
 use Bitrix\Main\Config\Option;
@@ -8,7 +8,7 @@ IncludeModuleLangFile(__FILE__);
 
 class Util
 {
-    const MODULE_ID = "itscript.question";
+    const MODULE_ID = "itscript.qna";
 
     /**
      * Function print var

@@ -2,28 +2,29 @@
 use Bitrix\Main;
 use Bitrix\Main\Loader;
 use Bitrix\Main\Localization\Loc;
+use Bitrix\Main\HttpApplication;
 use Bitrix\Main\Config\Option;
-use Itscript\Question\Util;
+use Itscript\Qna\Util;
 
-$module_id = "itscript.question";
+$module_id = "itscript.qna";
 
 IncludeModuleLangFile($_SERVER['DOCUMENT_ROOT'].'/bitrix/modules/main/options.php');
 IncludeModuleLangFile(__FILE__);
 
 Loader::includeModule($module_id);
 
-$request = \Bitrix\Main\HttpApplication::getInstance()->getContext()->getRequest();
+$request = HttpApplication::getInstance()->getContext()->getRequest();
 
-$defaultOptions = \Bitrix\Main\Config\Option::getDefaults($module_id);
+$defaultOptions = Option::getDefaults($module_id);
 
 $arMainPropsTab = [
 	"DIV" => "edit1",
-	"TAB" => Loc::getMessage("ITSCRIPT_QUESTION_MAIN_TAB_SETTINGS"),
-	"TITLE" => Loc::getMessage("ITSCRIPT_QUESTION_MAIN_TAB_SETTINGS_TITLE"),
+	"TAB" => Loc::getMessage("ITSCRIPT_QNA_MAIN_TAB_SETTINGS"),
+	"TITLE" => Loc::getMessage("ITSCRIPT_QNA_MAIN_TAB_SETTINGS_TITLE"),
 	"OPTIONS" => [
 
-		["ITSCRIPT_CONFIG_DEBUG", Loc::getMessage("T_ITSCRIPT_CONFIG_DEBUG"),
-			$defaultOptions["ITSCRIPT_CONFIG_DEBUG"],
+		["ITSCRIPT_QNA_CONFIG_DEBUG", Loc::getMessage("T_ITSCRIPT_QNA_CONFIG_DEBUG"),
+			$defaultOptions["ITSCRIPT_QNA_CONFIG_DEBUG"],
 			["checkbox"]
         ],
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace Itscript\Question;
+namespace Itscript\Qna;
 
 use Bitrix\Main\Localization\Loc;
 
