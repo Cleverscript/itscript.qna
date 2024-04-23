@@ -81,12 +81,7 @@ class Qna extends CBitrixComponent
 
             // Create FULL_NAME
             foreach ($rows as $k => $val) {
-                $glueName = trim(implode(' ', [
-                    $val['U_LAST_NAME'], 
-                    $val['U_NAME'], 
-                    $val['U_SECOND_NAME']
-                ]));
-                $rows[$k]['U_FULL_NAME'] = $glueName ?? $val['U_LOGIN'];
+                $rows[$k]['U_FULL_NAME'] = $this->getFullName($val, 'U');
 
                 // User photo
                 if ($val['U_PHOTO']) {
@@ -94,12 +89,7 @@ class Qna extends CBitrixComponent
                     $rows[$k]['U_PHOTO'] = $file['SRC'];
                 }
 
-                $glueName = trim(implode(' ', [
-                    $val['A_LAST_NAME'], 
-                    $val['A_NAME'], 
-                    $val['A_SECOND_NAME']
-                ]));
-                $rows[$k]['A_FULL_NAME'] = $glueName ?? $val['A_LOGIN'];
+                $rows[$k]['A_FULL_NAME'] = $this->getFullName($val, 'A');
 
                 // Admin photo
                 if ($val['A_PHOTO']) {
@@ -121,5 +111,17 @@ class Qna extends CBitrixComponent
             $this->abortResultCache();
         }
 	}
+
+    // Create full name user
+    public function getFullName(array $arr, string $sfx): string {
+
+        $glueName = trim(implode(' ', [
+            $arr["{$sfx}_LAST_NAME"], 
+            $arr["{$sfx}_NAME"], 
+            $arr["{$sfx}_SECOND_NAME"]
+        ]));
+
+        return trim($glueName) ?: $arr["{$sfx}_LOGIN"];
+    }
 
 }
