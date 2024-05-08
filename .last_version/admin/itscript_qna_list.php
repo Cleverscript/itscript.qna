@@ -256,8 +256,8 @@ if ($usePageNavigation) {
 }
 $onlyDel = false;
 $yesNo = [
-    Loc::getMessage("ITSCRIPT_QNA_TITLE_NO"),
-    Loc::getMessage("ITSCRIPT_QNA_TITLE_YES"),
+    'N' => Loc::getMessage("ITSCRIPT_QNA_TITLE_NO"),
+    'Y' => Loc::getMessage("ITSCRIPT_QNA_TITLE_YES"),
 ];
 CTimeZone::Disable();
 $adminList->SetNavigationParams($formIterator, array("BASE_LINK" => $selfFolderUrl . "itscript_qna_list.php"));
