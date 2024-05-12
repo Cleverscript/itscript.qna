@@ -212,8 +212,7 @@ class itscript_qna extends CModule
             return false;
         }
 
-        //$this->InstallEvents();
-        //$this->InstallAgents();itscript_answers_list.php
+        $this->InstallEvents();
 
         return true;
     }
@@ -221,10 +220,9 @@ class itscript_qna extends CModule
     function DoUninstall() {
 
         ModuleManager::unRegisterModule($this->MODULE_ID);
-        //$this->UnInstallEvents();
+        $this->UnInstallEvents();
         $this->UnInstallFiles();
         $this->UninstallDB();
-        //$this->UnInstallAgents();
 
         return true;
     }
