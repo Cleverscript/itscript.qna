@@ -13,7 +13,8 @@ Loader::includeModule('itscript.qna');
 
 class Qna extends CBitrixComponent
 {
-	public function onPrepareComponentParams($arParams) {
+	public function onPrepareComponentParams($arParams) 
+    {
 
         /*echo '<pre>';
         print_r($arParams);
@@ -29,9 +30,10 @@ class Qna extends CBitrixComponent
 		return $result;
 	}
 
-	public function executeComponent() {
+	public function executeComponent() 
+    {
 
-		if ($this->startResultCache(false, array(($this->arParams["CACHE_GROUPS"]==="N"? false: CurrentUser::get()->getUserGroups())))) {
+		if ($this->startResultCache(false, array(($this->arParams["CACHE_GROUPS"]==="N"? false: \Bitrix\Main\Engine\CurrentUser::get()->getUserGroups())))) {
 	        
             // add assets
             Asset::getInstance()->addCss($this->GetPath() . '/templates/' . $this->getTemplateName() . '/style.css');
@@ -113,7 +115,8 @@ class Qna extends CBitrixComponent
 	}
 
     // Create full name user
-    public function getFullName(array $arr, string $sfx): string {
+    public function getFullName(array $arr, string $sfx): string
+    {
 
         $glueName = trim(implode(' ', [
             $arr["{$sfx}_LAST_NAME"], 

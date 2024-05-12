@@ -33,7 +33,8 @@ class itscript_qna extends CModule
 
     public $eventManager;
 
-    function __construct() {
+    function __construct()
+    {
 
         $arModuleVersion = array();
         include(__DIR__ . "/version.php");
@@ -59,13 +60,15 @@ class itscript_qna extends CModule
 
     }
 
-    public function isVersionD7() {
+    public function isVersionD7()
+    {
 
         return CheckVersion(ModuleManager::getVersion("main"), "14.00.00");
 
     }
 
-    public function GetPath($notDocumentRoot = false) {
+    public function GetPath($notDocumentRoot = false)
+    {
         if ($notDocumentRoot) {
 
             return str_ireplace(Application::getDocumentRoot(), '', dirname(__DIR__));
@@ -77,76 +80,88 @@ class itscript_qna extends CModule
         }
     }
 
-    public static function getModuleId(): string {
-
+    public static function getModuleId(): string
+    {
         return basename(dirname(__DIR__));
-
     }
 
-    public function getVendor(): string  {
+    public function getVendor(): string
+    {
         $expl = explode('.', $this->MODULE_ID);
         return $expl[0];
     }
 
-    function InstallFiles() {
+    function InstallFiles()
+    {
 
         if (!CopyDirFiles(
-            $_SERVER["DOCUMENT_ROOT"]."/bitrix/modules/{$this->MODULE_ID}/install/admin", 
-            $_SERVER["DOCUMENT_ROOT"]."/bitrix/admin/", true)) {
+                $this->GetPath() . '/install/admin', 
+                $_SERVER["DOCUMENT_ROOT"] . '/bitrix/admin/', true)
+            ) {
 
             return false;
         }
         if (!CopyDirFiles(
-            $_SERVER["DOCUMENT_ROOT"]."/bitrix/modules/{$this->MODULE_ID}/install/bitrix", 
-            $_SERVER["DOCUMENT_ROOT"]."/bitrix/", true)) {
+                $this->GetPath() . '/install/bitrix', 
+                $_SERVER["DOCUMENT_ROOT"] . '/bitrix/', true)
+            ) {
 
             return false;
         }
 
         if (!CopyDirFiles(
-            $_SERVER["DOCUMENT_ROOT"]."/bitrix/modules/{$this->MODULE_ID}/install/components", 
-            $_SERVER["DOCUMENT_ROOT"]."/bitrix/components/", true, true)) {
+                $this->GetPath() . '/install/components', 
+                $_SERVER["DOCUMENT_ROOT"] . '/bitrix/components/', true, true)
+            ) {
+
             return false;
         }
 
         return true;
     }
 
-    function UnInstallFiles() {
-
-        File::deleteFile(
-            $_SERVER["DOCUMENT_ROOT"]."/bitrix/admin/itscript_qna_list.php"
-        );
-        File::deleteFile(
-            $_SERVER["DOCUMENT_ROOT"]."/bitrix/admin/itscript_qna_edit.php"
-        );
-
-        //Directory::deleteDirectory($_SERVER["DOCUMENT_ROOT"]."/bitrix/components/{$this->getVendor()}");
-
+    function UnInstallFiles()
+    {
+        File::deleteFile($_SERVER["DOCUMENT_ROOT"] . '/bitrix/admin/itscript_qna_list.php');
+        File::deleteFile($_SERVER["DOCUMENT_ROOT"] . '/bitrix/admin/itscript_qna_edit.php');
+        Directory::deleteDirectory($_SERVER["DOCUMENT_ROOT"] . '/bitrix/components/' . str_replace('.', '/', $this->MODULE_ID));
     }
 
     /**
      * Function register events solution
      */
-    function InstallEvents() {
-
+    function InstallEvents()
+    {
         $eventManager = EventManager::getInstance();
-        $eventManager->registerEventHandler('main', 'OnBuildGlobalMenu', $this->MODULE_ID, '\Itscript\Qna\Menu', 'adminOnBuildGlobalMenu', 9999);
+        $eventManager->registerEventHandler(
+            'main', 
+            'OnBuildGlobalMenu', 
+            $this->MODULE_ID, 
+            '\Itscript\Qna\Menu', 
+            'adminOnBuildGlobalMenu', 
+            9999
+        );
     }
 
     /**
      * Function unregister events solution
      */
-    function UnInstallEvents() {
-
+    function UnInstallEvents()
+    {
         $eventManager = EventManager::getInstance();
-        $eventManager->unRegisterEventHandler('main', 'OnBuildGlobalMenu', $this->MODULE_ID, '\Itscript\Qna\Menu', 'adminOnBuildGlobalMenu');
-    
+        $eventManager->unRegisterEventHandler(
+            'main', 
+            'OnBuildGlobalMenu', 
+            $this->MODULE_ID, 
+            '\Itscript\Qna\Menu', 
+            'adminOnBuildGlobalMenu'
+        );
     }
 
 
     // Create entity table in database
-    public function InstallDB() {
+    public function InstallDB()
+    {
 
         global $DB, $APPLICATION;
         $this->errors = $DB->RunSQLBatch(self::GetPath() . '/install/db/install.sql');
@@ -161,7 +176,8 @@ class itscript_qna extends CModule
         return true;
     }
 
-    public function UninstallDB() {
+    public function UninstallDB()
+    {
 
         global $DB, $APPLICATION;
         $this->errors = $DB->RunSQLBatch(self::GetPath() . '/install/db/uninstall.sql');
@@ -180,7 +196,8 @@ class itscript_qna extends CModule
 	 * @param $module_id
 	 * @return bool
 	 */
-    function checkIssetExtModules($module_id) {
+    function checkIssetExtModules($module_id)
+    {
 
     	if (!Loader::includeModule($module_id)) {
 			\CAdminMessage::ShowMessage(
@@ -201,7 +218,8 @@ class itscript_qna extends CModule
 		return true;
 	}
 
-    function DoInstall() {
+    function DoInstall()
+    {
 
         ModuleManager::registerModule($this->MODULE_ID);
 
@@ -217,7 +235,8 @@ class itscript_qna extends CModule
         return true;
     }
 
-    function DoUninstall() {
+    function DoUninstall()
+    {
 
         ModuleManager::unRegisterModule($this->MODULE_ID);
         $this->UnInstallEvents();
@@ -227,7 +246,8 @@ class itscript_qna extends CModule
         return true;
     }
 
-    function GetModuleRightList() {
+    function GetModuleRightList()
+    {
         return [
             "reference_id" => array("D", "K", "S", "W"),
             "reference" => [

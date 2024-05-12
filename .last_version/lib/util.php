@@ -14,11 +14,11 @@ class Util
      * Function print var
      * @param $value
      */
-    public static function debug($value) {
+    public static function debug($value)
+    {
         echo "<br/><pre style='padding:10px; border:1px solid #DDD; background-color:#EEE; text-color:#000; font-family:Verdana; font-size:13px;'>";
 
-        switch (gettype($value))
-        {
+        switch (gettype($value)) {
             case 'integer':
             case 'double':
             case 'string':
@@ -33,7 +33,8 @@ class Util
         echo "</pre><br/>";
     }
 
-	public static function writeSysLog($auditTypeId, $itemId, $description, $severity = 'DEBUG') {
+	public static function writeSysLog($auditTypeId, $itemId, $description, $severity = 'DEBUG')
+    {
 		\CEventLog::Add([
 			"SEVERITY" => $severity,
 			"AUDIT_TYPE_ID" => $auditTypeId,
@@ -43,7 +44,8 @@ class Util
 		]);
 	}
 
-    public static function clearQuestionText($s) {
+    public static function clearQuestionText($s)
+    {
         $s = strip_tags($s);
         return preg_replace('#\bhttps?://[^\s()<>]+(?:\([\w\d]+\)|([^[:punct:]\s]|/))#', '', $s);
     }
