@@ -54,7 +54,8 @@
     margin-top: 3px;
     width: 45px;
     height: 45px;
-    background-repeat: no-repeat;
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
 }
 .qna-form-alert{
     display: none;
