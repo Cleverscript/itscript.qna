@@ -14,22 +14,10 @@ Loader::includeModule('itscript.qna');
 
 class Item extends Controller
 {
-    /*public function configureActions(): array
+    public function configureActions(): array
     {
-        return [
-            //Название вашего Action
-            'add' => [
-                //Отключение фильтра
-                '-prefilters' => [
-                    ActionFilter\Authentication::class,
-                ],
-                //Включение фильтра                
-                'prefilters' => [
-                    ActionFilter\Csrf::class,
-                ],
-            ],
-        ];
-    }*/
+        return [];
+    }
 
 	public function addAction(array $fields):? array
 	{
