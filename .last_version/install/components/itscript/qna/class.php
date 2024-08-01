@@ -28,7 +28,7 @@ class Qna extends CBitrixComponent
 	public function executeComponent() 
     {
 
-		if ($this->startResultCache(false, array(($this->arParams["CACHE_GROUPS"]==="N"? false: \Bitrix\Main\Engine\CurrentUser::get()->getUserGroups())))) {
+		if ($this->startResultCache(false, array(($this->arParams["CACHE_GROUPS"]==="N"? false: CurrentUser::get()->getUserGroups())))) {
 	        
             // add assets
             Asset::getInstance()->addCss($this->GetPath() . '/templates/' . $this->getTemplateName() . '/style.css');
