@@ -15,11 +15,6 @@ class Qna extends CBitrixComponent
 {
 	public function onPrepareComponentParams($arParams) 
     {
-
-        /*echo '<pre>';
-        print_r($arParams);
-        echo '</pre>';*/
-
 		$result = [
 			"CACHE_TYPE" => $arParams["CACHE_TYPE"],
 			"CACHE_TIME" => isset($arParams["CACHE_TIME"])? $arParams["CACHE_TIME"]: 36000000,
@@ -73,6 +68,10 @@ class Qna extends CBitrixComponent
                 'count_total' => true
             ]);
 
+            if (!$questions->getCount()) {
+                $this->abortResultCache();
+            }
+
             // Set full count elements entity
             $nav->setRecordCount($questions->getCount());
 
@@ -105,13 +104,10 @@ class Qna extends CBitrixComponent
 
             // Save data cache
             $this->SetResultCacheKeys(['ITEMS', 'NAV']);
+	    }
 
-            // Include template
-            $this->includeComponentTemplate();
-
-	    } else {
-            $this->abortResultCache();
-        }
+        // Include template
+        $this->includeComponentTemplate();
 	}
 
     // Create full name user
