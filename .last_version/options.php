@@ -13,6 +13,8 @@ IncludeModuleLangFile(__FILE__);
 
 Loader::includeModule($module_id);
 
+global $APPLICATION;
+
 $request = HttpApplication::getInstance()->getContext()->getRequest();
 
 $defaultOptions = Option::getDefaults($module_id);
@@ -48,7 +50,7 @@ $aTabs = [
 //Save form
 if ($request->isPost() && $request["save"] && check_bitrix_sessid()) {
     foreach ($aTabs as $aTab) {
-        if (count($aTab['OPTIONS'])) {
+        if (!empty($aTab['OPTIONS'])) {
             __AdmSettingsSaveOptions($module_id, $aTab["OPTIONS"]);
         }
     }
@@ -65,7 +67,7 @@ $tabControl = new CAdminTabControl("tabControl", $aTabs);
 
         <?php
         foreach ($aTabs as $aTab) {
-            if(is_array($aTab['OPTIONS'])) {
+            if(!empty($aTab['OPTIONS'])) {
                 __AdmSettingsDrawList($module_id, $aTab['OPTIONS']);
                 $tabControl->BeginNextTab();
             }
